@@ -9,15 +9,12 @@ import bodyParser from 'body-parser'
 
 const port=process.env.PORT||6001
 
-
 const app = express()
 app.use(bodyParser.json())
 app.use('/api/users',userRoute)
 app.use(productRoute)
 
-app.get('/api/products',(req,res) =>{
-    res.send(data.products)
-})
+
 if(process.env.NODE_EVR==='production'){
 
     app.use(express.static('../clienside/build'))

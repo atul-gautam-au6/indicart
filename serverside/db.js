@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+import {mongoURI}  from './config'
 
 mongoose.connect('mongodb+srv://atul:1234@cluster0.c9ppv.mongodb.net/shopingapp?retryWrites=true&w=majority',{
     useNewUrlParser: true,
