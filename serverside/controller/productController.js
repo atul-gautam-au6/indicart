@@ -4,7 +4,7 @@ import productmodel from '../Model/productModel'
 module.exports={
    async homeScreenProduct (req,res){
     const {category,page,perPage,limit} = req.query
-    console.log(category)
+    // console.log(category)
     const option = {
         page:parseInt(page,10)||1,
         limit:parseInt(perPage,12)||12
@@ -15,17 +15,17 @@ module.exports={
     };
     const regex = new RegExp(escapeRegex(category), 'gi');
     const productroute = await  productmodel.paginate({category:regex||''},option)
-    res.send(productroute.docs)
+   return  res.send(productroute.docs)
     },
 
 
      async getProductsByID (req,res)  {
         const productId = req.params.id;
-        const product = productmodel.findOne({_id:productId})
+        const product = await productmodel.findOne({_id:productId})
         if(product){
-            res.send(product)
+           return res.send(product)
         }
         else if(!product)
-        res.status(404).send({msg:"product not found"})
+       return res.status(404).send({msg:"product not found"})
     }
 }

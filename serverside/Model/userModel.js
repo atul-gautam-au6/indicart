@@ -11,9 +11,12 @@ const userSchema = new mongoose.Schema({
         unique:true,
         dropDups:true
     },
+    googleId:{
+        type:String
+    },
     password:{
-        type:String,
-        required:true
+        type:String
+       
     },
     isAdmin:{
         type:String,

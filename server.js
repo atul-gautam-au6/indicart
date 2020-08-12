@@ -1,5 +1,5 @@
 import express from 'express';
-import data from './serverside/data.js';
+// import data from './serverside/data.js';
 import userRoute from './serverside/routes/userRoutes'
 import productRoute from './serverside/routes/productroute'
 import dotenv from 'dotenv'
@@ -11,8 +11,8 @@ const port=process.env.PORT||6001
 
 const app = express()
 app.use(bodyParser.json())
-app.use('/api/users',userRoute)
 app.use(productRoute)
+app.use('/api/users',userRoute)
 
 
 if(process.env.NODE_EVR==='production'){

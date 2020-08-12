@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import { JWT_SECRET_KEY } from "./config";
+import { JWT_SECRET_KEY } from './config';
 const getToken = (user) =>{
     return sign({
         _id:user._id,
@@ -7,7 +7,7 @@ const getToken = (user) =>{
        email:user.email,
       password:user.password,
        isAdmin:user.isAdmin,
-    },'JWT@Secreate$',{ expiresIn:'48h' })
+    },JWT_SECRET_KEY,{ expiresIn:'48h' })
 }
 export {
     getToken

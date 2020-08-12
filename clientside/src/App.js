@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {BrowserRouter,Route, Link} from "react-router-dom"
 import HomeScreen from './screens/HomeScreen'
@@ -6,15 +6,18 @@ import productScreen from './screens/ProductScreens'
 import CartScreen from './screens/CartScreen';
 import SignScreens from './screens/SignInScreen';
 import Registerscreen from './screens/Registerscreen';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Shoppingcreen from './screens/Shoppingcreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 
 
-function App() {
+function App() { 
+ 
   const userSignin = useSelector(state=>state.userSignin)
+  // getAccessTokenFromCode()
   const {userInfo} = userSignin
+  // console.log(userInfo)
 
 
   const openMenu = () =>{
@@ -23,6 +26,7 @@ function App() {
   const closeMenu = () =>{
     document.querySelector(".sidebar").classList.remove("open")
   }
+  
  
   return (
     <BrowserRouter>
@@ -42,6 +46,17 @@ function App() {
               <Link to="/signin">Signin</Link>
             }
             {/* <a href="sigin.html">Sign In</a> */}
+            {userInfo && userInfo.isAdmin && (
+              <div className="dropdown">
+                <a href="#">Admin</a>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/orders">Orders</Link>
+                    <Link to="/products">Products</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
         </div>
     </header>
 

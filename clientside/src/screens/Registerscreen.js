@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import registerin from '../action/useractionregister';
 
+
+
 const Registerscreen = (props) => {
    const [name,setName] = useState('')
    const [email,setEmail] = useState('')
    const [password,setPassword] = useState('')
    const [repassword,setRepassword] = useState('')
-
    const userRegister = useSelector(state=>state.userRegister)
    const {loading,userInfo,error} =userRegister
     const dispatch = useDispatch();
@@ -27,8 +28,12 @@ const Registerscreen = (props) => {
         e.preventDefault()
         dispatch(registerin(name,email,password))
     }
-    
 
+    
+      
+     
+      
+    
     return (
         <div className='form'>
            <form onSubmit={submitHandler}> 
@@ -64,11 +69,13 @@ const Registerscreen = (props) => {
                         <input type="password" name="repassword" id="repassword" onChange={(e)=>setRepassword(e.target.value)} />
 
                     </li>
+                   
                     <li>
                         <button type="submit" className="button primary">Register</button>
                     </li>
-                    <li>
-                        
+                   
+                    
+                        <li>
                         Allready have Account <Link to={redirect=='/' ? "signin" :"signin?redirect=" + redirect} className="button secondary text-center">Sign-in</Link>
                     </li>
                    

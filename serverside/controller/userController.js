@@ -4,19 +4,23 @@ import { getToken } from '../utils'
 module.exports ={
      async registerroute(req,res){
         try {
+            
             const user = new User({
                 name:req.body.name,
                 email:req.body.email,
                 password:req.body.password,
+                googleId:req.body.googleid
+
             })
             const newuser = user.save()
+            console.log(newuser)
             if(newuser) {
-                return res .send({
+                return res.send({
                     id:newuser.id,
                     name:newuser.name,
                     email:newuser.email,
                     isAdmin:newuser.isAdmin,
-                    token:getToken(newuser)
+                    token:req.body.token ?req.body.token:getToken(newuser)
                 })
             }
             else{

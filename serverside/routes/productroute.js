@@ -4,8 +4,8 @@ import { getProductsByID,homeScreenProduct } from '../controller/productControll
 
 const router = express.Router()
 
-router.get('/api/products/:id',getProductsByID)
 router.get('/api/products',homeScreenProduct)
+router.get('/api/products/:id',getProductsByID)
 
 
 

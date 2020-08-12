@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { useSelector, useDispatch } from 'react-redux';
-import   signin   from '../action/userAction';
+import    {signin, registerinwithGoogle }   from '../action/userAction';
+import GoogleLogin from 'react-google-login'
 
 const SignScreens = (props) => {
    const [email,setEmail] = useState('')
+   const [response,setResponse]=useState('')
    const [password,setPassword] = useState('')
    const userSignin = useSelector(state=>state.userSignin)
    const {loading,userInfo,error} = userSignin
@@ -23,8 +24,23 @@ const SignScreens = (props) => {
         e.preventDefault()
         dispatch(signin(email,password))
     }
-    
-
+    const [name,setName] = useState('')
+    const [emaildata,setEmaildata] = useState('')
+    const [tokenid,setTokenid] = useState('')
+    const [googleid,setGoogleId]=useState('')
+    const responseGoogle=(response)=>{
+        // console.log(response)
+        setName(response.profileObj.name)
+        setEmaildata(response.profileObj.email)
+        setTokenid(response.tokenId)
+        setGoogleId(response.googleId)
+    }
+    const googlesubmit =async()=>{
+        // e.preventDefault()
+        console.log(name,emaildata)
+        await registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
+    }
+    // registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
     return (
         <div className='form'>
            <form onSubmit={submitHandler}> 
@@ -53,6 +69,19 @@ const SignScreens = (props) => {
                     <li>
                         <button type="submit" className="button primary">Signin</button>
                     </li>
+                    <li>
+                        <GoogleLogin 
+                        className="button"
+                            clientId="485426421084-eoa7b38nq83it0t5742j08sejfbg9ivh.apps.googleusercontent.com"
+                            // buttonText="Login"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+                            
+                            onChange={googlesubmit}
+                        />
+                    </li>
+                   
                     <li>
                         New to User
                     </li>

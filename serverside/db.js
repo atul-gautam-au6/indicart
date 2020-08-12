@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-import {mongoURI}  from './config'
+const mongoose = require('mongoose');
+const { mongoURI } = require('./config');
 
-mongoose.connect('mongodb+srv://atul:1234@cluster0.c9ppv.mongodb.net/shopingapp?retryWrites=true&w=majority',{
+mongoose.connect(mongoURI,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
