@@ -20,7 +20,7 @@ const HomeScreen = (props) => {
     },[])
 
     return (
-      loading ? <div>Loading...</div> :
+      loading ? <img src='/image/giiflogo.gif' />:
       error ? <div>{error}</div> :
         <ul className="products">
              {

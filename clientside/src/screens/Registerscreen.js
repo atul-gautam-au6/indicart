@@ -43,7 +43,7 @@ const Registerscreen = (props) => {
                     </li>
                     <li>
                         {
-                            loading && <div>loading...</div>
+                            loading && <img src='/image/giiflogo.gif' />
                         }
                         {
                             error && <div>{error}</div>

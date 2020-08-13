@@ -17,7 +17,7 @@ export const registerinwithGoogle =(name,email,token,googleid)=>async(dispatch)=
     dispatch({type:USER_SIGNREQGOOGLE_REQUEST,payload:{name,email,token,googleid}})
     try {
         const {data} = await Axios.post('/api/users/register',{name,email,token,googleid})
-        console.log(name,email)
+        console.log("googledata",name,email)
         dispatch({type:USER_SIGNREQGOOGLE_SUCESS,payload:data})
         Cookies.set('UserInfo',JSON.stringify(data))
     } catch (error) {

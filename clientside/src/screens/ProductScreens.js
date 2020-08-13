@@ -31,7 +31,7 @@ const handleAddToCart = () =>{
                 <Link to="/" >Back TO Result</Link>
             </div>
             {
-                loading ? <div>loading...</div> :
+                loading ? <img src='/image/giiflogo.gif' />:
                 error ? <div>{error} </div> :(
                     <div className="details">
                 <div className="details-image">

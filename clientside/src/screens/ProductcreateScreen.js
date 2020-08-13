@@ -46,7 +46,7 @@ const ProductcreateScreen = (props) => {
                     </li>
                     <li>
                         {
-                            loadingSave && <div>loading...</div>
+                            loadingSave && <img src='/image/giiflogo.gif' />
                         }
                         {
                             errorSave && <div>{errorSave}</div>

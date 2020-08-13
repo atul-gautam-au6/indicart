@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import    {signin, registerinwithGoogle }   from '../action/userAction';
 import GoogleLogin from 'react-google-login';
 import facebookLogin from 'react-facebook-login'
+import Axios from 'axios';
 
 const SignScreens = (props) => {
    const [email,setEmail] = useState('')
@@ -20,21 +21,20 @@ const SignScreens = (props) => {
     const [emaildata,setEmaildata] = useState('')
     const [tokenid,setTokenid] = useState('')
     const [googleid,setGoogleId]=useState('')
-    const responseGoogle=(response)=>{
+
+    const responseGoogle=async(response)=>{
         // console.log(response)
         setName(response.profileObj.name)
         setEmaildata(response.profileObj.email)
         setTokenid(response.tokenId)
         setGoogleId(response.googleId)
+        const { data}= await Axios.post('/api/users/register',response.profileObj)
+        // console.log(data)
+        if(data){
+            props.history.push(redirect)
+        }
     }
-    const onhandale =(e)=>{
-
-        registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
-        console.log('now ServiceWorkerContainer..')
-    }
-    // useEffect(() => {
-    //     if(userInfo=='undefined')
-    //     console.log('it is working ha..')
+    //     useEffect(async() => {                
     //     return () => {
     //         // cleanup
     //     }
@@ -65,8 +65,11 @@ const SignScreens = (props) => {
                         <h2>Sign-in</h2>
                     </li>
                     <li>
+                        {/* {
+                                data &&<div>{data.data}</div>
+                        } */}
                         {
-                            loading && <div>loading...</div>
+                            loading && <img src='/image/giiflogo.gif' />
                         }
                         {
                             error && <div>{error}</div>
@@ -93,7 +96,7 @@ const SignScreens = (props) => {
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}  
-                            onChange={onhandale}                          
+                                                   
                         />
                     </li>
                     {/* <li>
