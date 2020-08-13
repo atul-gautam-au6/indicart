@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Shoppingcreen from './screens/Shoppingcreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import ProductcreateScreen from './screens/ProductcreateScreen';
 
 
 function App() { 
@@ -45,6 +46,7 @@ function App() {
               userInfo ? <Link to='/profile'>{userInfo.name}</Link>: 
               <Link to="/signin">Signin</Link>
             }
+            
             {/* <a href="sigin.html">Sign In</a> */}
             {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
@@ -52,7 +54,7 @@ function App() {
                 <ul className="dropdown-content">
                   <li>
                     <Link to="/orders">Orders</Link>
-                    <Link to="/products">Products</Link>
+                    <Link to="/product">Products</Link>
                   </li>
                 </ul>
               </div>
@@ -76,6 +78,7 @@ function App() {
     <main className="main">
        <div className="content">
          <Route exact={true} path='/register' component={Registerscreen} />
+         <Route exact={true} path="/product" component={ProductcreateScreen} />
          <Route exact={true} path='/payment' component={PaymentScreen} />
          <Route exact={true} path='/shipping' component={Shoppingcreen} />
          <Route exact={true} path='/placeorder' component={PlaceOrderScreen} />

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import    {signin, registerinwithGoogle }   from '../action/userAction';
-import GoogleLogin from 'react-google-login'
+import GoogleLogin from 'react-google-login';
+import facebookLogin from 'react-facebook-login'
 
 const SignScreens = (props) => {
    const [email,setEmail] = useState('')
@@ -12,18 +13,9 @@ const SignScreens = (props) => {
    const {loading,userInfo,error} = userSignin
     const dispatch = useDispatch();
     const redirect = props.location.search?props.location.search.split("=")[1]:'/'
-    useEffect(() => {
-        if(userInfo){
-            props.history.push(redirect)
-        }
-        return () => {
-            //cleanup
-        }
-    }, [userInfo])
-    const submitHandler=(e)=>{
-        e.preventDefault()
-        dispatch(signin(email,password))
-    }
+
+
+        //Google-Login
     const [name,setName] = useState('')
     const [emaildata,setEmaildata] = useState('')
     const [tokenid,setTokenid] = useState('')
@@ -35,11 +27,35 @@ const SignScreens = (props) => {
         setTokenid(response.tokenId)
         setGoogleId(response.googleId)
     }
-    const googlesubmit =async()=>{
-        // e.preventDefault()
-        console.log(name,emaildata)
-        await registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
+    const onhandale =(e)=>{
+
+        registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
+        console.log('now ServiceWorkerContainer..')
     }
+    // useEffect(() => {
+    //     if(userInfo=='undefined')
+    //     console.log('it is working ha..')
+    //     return () => {
+    //         // cleanup
+    //     }
+    // }, [])
+
+
+
+
+    useEffect(() => {
+        if(userInfo){
+            props.history.push(redirect)
+        }
+        return () => {
+            //cleanup
+        }
+    }, [userInfo ])
+    const submitHandler=(e)=>{
+        e.preventDefault()
+        dispatch(signin(email,password))
+    }
+    
     // registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
     return (
         <div className='form'>
@@ -76,11 +92,15 @@ const SignScreens = (props) => {
                             // buttonText="Login"
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
-                            cookiePolicy={'single_host_origin'}
-                            
-                            onChange={googlesubmit}
+                            cookiePolicy={'single_host_origin'}  
+                            onChange={onhandale}                          
                         />
                     </li>
+                    {/* <li>
+                        <facebookLogin 
+                            
+                        />
+                    </li> */}
                    
                     <li>
                         New to User
@@ -96,3 +116,7 @@ const SignScreens = (props) => {
 }
 
 export default SignScreens
+
+
+
+

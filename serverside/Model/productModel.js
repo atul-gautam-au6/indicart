@@ -1,9 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import mongoosepaginate from 'mongoose-paginate'
 const productSchema = new Schema({
-    _id:{
-        type:String
-    },
+   
     category:{
         type:String,
         required:true
@@ -35,15 +33,12 @@ const productSchema = new Schema({
     offers:{
         type:Number
     },
-    Combo_Offers:{
-
-    },
-    Stock_Availibility:{
-        type:String,
-
-    },
     image:{
         type:String
+    },
+    rating:{
+        type:Number,
+        default:3
     },
     numReviews:{
         type:Number,

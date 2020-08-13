@@ -11,7 +11,7 @@ const port=process.env.PORT||6001
 
 const app = express()
 app.use(bodyParser.json())
-app.use(productRoute)
+app.use('/api',productRoute)
 app.use('/api/users',userRoute)
 
 
@@ -20,6 +20,6 @@ if(process.env.NODE_EVR==='production'){
     app.use(express.static('../clienside/build'))
 }
 
-app.listen(8080,()=>{
-    console.log('server running at port number '+ 8080)
+app.listen(8081,()=>{
+    console.log('server running at port number '+ 8081)
 })
