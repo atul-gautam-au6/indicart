@@ -28,11 +28,11 @@ const SignScreens = (props) => {
         setEmaildata(response.profileObj.email)
         setTokenid(response.tokenId)
         setGoogleId(response.googleId)
-        const { data}= await Axios.post('/api/users/register',response.profileObj)
+        const { data}= await Axios.post('/api/users/register',{tokenId:response.tokenId})
         // console.log(data)
-        if(data){
-            props.history.push(redirect)
-        }
+        // if(data){
+        //     props.history.push(redirect)
+        // }
     }
     //     useEffect(async() => {                
     //     return () => {

@@ -17,6 +17,7 @@ router.post('/product',async(req,res)=>{
     // console.log(products)
     const newProduct = await products.save()
     if(newProduct){
+        
         return res.status(201).send({msg:'new Product Created',data:newProduct})
         
     }

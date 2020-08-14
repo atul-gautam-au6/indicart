@@ -1,35 +1,35 @@
 import User from '../Model/userModel'
 import { getToken } from '../utils'
-import { response } from 'express'
+import {OAuth2Client} from 'google-auth-library'
 
+const client =new OAuth2Client('"485426421084-eoa7b38nq83it0t5742j08sejfbg9ivh.apps.googleusercontent.com"')
 module.exports ={
      async registerroute(req,res){
         try {
-            const userData = req.body
-            const userIsPresend =await User.findOne({email:req.body.email})
-            console.log(userIsPresend)
-            if(!userIsPresend){
-                const user = new User({
-                    
-                    ...userData
-                })
-                const newuser = await user.save()
-                // console.log(newuser)
-                if(newuser) {
-                    return res.send({
-                        id:newuser.id,
-                        name:newuser.name,
-                        email:newuser.email,
-                        isAdmin:newuser.isAdmin,
-                        token:req.body.token ?req.body.token:getToken(newuser)
-                    })
-                }
-                else{
-                    return res.status(201).send({msg:'email and password not valid'})
-                }
-            }
-            return res.send('User Already Registered here')
+            const googleToken = req.body
+            if(!googleToken.tokenId){
 
+                const{ payload }= await client.verifyIdToken({idToken:googleToken.tokenId,audience:"485426421084-eoa7b38nq83it0t5742j08sejfbg9ivh.apps.googleusercontent.com"})        
+            }
+            const userExist = await User.findOne({email:payload.email||googleToken.email})
+            console.log(googleToken.name)
+           if(userExist){
+               return res.send('User Already Exist')
+           }
+           const user = new User({
+               name:payload.name||googleToken.name,
+               email:payload.email||googleToken.email,
+               password:'1234'||googleToken.password,
+               email_verified:payload.email_verified||googleToken.email_verified
+           })
+           const newuser = user.save()
+           if(newuser){
+               return res.send({newUser})
+           }
+           else{
+               return res.send('user not created')
+           }
+            
             
         } catch (error) {
             return  res.status(404).send({message:error.message})

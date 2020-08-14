@@ -11,18 +11,18 @@ const userSchema = new mongoose.Schema({
         unique:true,
         dropDups:true
     },
-    googleId:{
-        type:String
-    },
-    imageUrl:{
-        type:String
-    },
     password:{
-        type:String
+        type:String,
+        required:true
        
     },
+    email_verified:{
+        type:Boolean,
+        required:true,
+        default:false
+    },
     isAdmin:{
-        type:String,
+        type:Boolean,
         required:true,
         default:false
 
