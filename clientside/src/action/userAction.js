@@ -9,7 +9,7 @@ export const signin =(email,password)=>async(dispatch)=>{
         dispatch({type:USER_SIGN_SUCCESS,payload:data})
         Cookies.set('UserInfo',JSON.stringify(data))
     } catch (error) {
-        dispatch({type:USER_SIGN_FAIL,payload:error.message})
+        dispatch({type:USER_SIGN_FAIL,payload:'Invalid Credentials'})
         
     }
 }
@@ -21,7 +21,7 @@ export const registerinwithGoogle =(name,email,token,googleid)=>async(dispatch)=
         dispatch({type:USER_SIGNREQGOOGLE_SUCESS,payload:data})
         Cookies.set('UserInfo',JSON.stringify(data))
     } catch (error) {
-        dispatch({type:USER_SIGNREQGOOGLE_FAIL,payload:error.message})
+        dispatch({type:USER_SIGNREQGOOGLE_FAIL,payload:'All Fields Are Required'})
         
     }
 }

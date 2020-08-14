@@ -4,7 +4,7 @@ export function productListReducer(state={products:[]},action){
 
     switch (action.type) {
         case PRODUCT_LIST_REQ:
-            return {loading:true}
+            return {loading:true,product:[]}
         
         case PRODUCT_LIST_SUCCESS:
             return {loading:false,products:action.payload};

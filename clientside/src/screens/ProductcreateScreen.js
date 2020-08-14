@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {ProductsaveAction} from '../action/productsave'
+import listProduct from '../action/productAction';
 
 const ProductcreateScreen = (props) => {
    const [category,setCategory] = useState('')
@@ -15,21 +16,23 @@ const ProductcreateScreen = (props) => {
    const [numRevies,setNumRevies] = useState('')
    const [rating,setRating] = useState('')
    const [countInStock,setCountInStock] = useState('')
+   const productlist = useSelector(state=>state.productList)
+//    console.log(productlist)
+   const {loading,products,error} = productlist
+//    console.log(loading)
    const productSave = useSelector(state=>state.productSave)
    const {loading:loadingSave,success:successSave,errorSave} = productSave
     const dispatch = useDispatch();
     // const redirect = props.location.search?props.location.search.split("=")[1]:'/'
 
-
-      
-
-
     useEffect(() => {
-       
+        dispatch(listProduct())
         return () => {
-            //cleanup
+            // cleanup
         }
     }, [])
+
+      
     const submitHandler=(e)=>{
         e.preventDefault()
         dispatch(ProductsaveAction({category,name,description,brand,pack_size,
@@ -38,7 +41,12 @@ const ProductcreateScreen = (props) => {
     
     // registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
     return (
-        <div className='form'>
+        <div className="content content-marined">
+            <div className="product-header">
+                <h3>Products</h3>
+                <button>Create Product</button>
+            </div>
+            <div className='form'>
            <form onSubmit={submitHandler}> 
                 <ul className="form-container">
                     <li>
@@ -100,6 +108,36 @@ const ProductcreateScreen = (props) => {
                 </ul>
            </form>
         </div>
+            <div className="product-list">
+                <table>
+                    <thead>
+                        <tr>ID</tr>
+                        <tr>Name</tr>
+                        <tr>Price</tr>
+                        <tr>Category</tr>
+                        <tr>Action</tr>
+                    </thead>
+                    <tbody>
+                        {products.map((product)=>(
+                            
+                        <tr key={product._id}>
+                            <td>{product.name}</td>
+                        <td>{product._id}</td>
+                        <td>{product.name}</td>
+                        <td>{product.price}</td>
+                        <td>{product.category}</td>
+                        <td>{product.brand}</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                        </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+       
             
     )
 }
