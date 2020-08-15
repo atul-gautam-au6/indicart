@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import    {signin }   from '../action/userAction';
 import GoogleLogin from 'react-google-login';
-import facebookLogin from 'react-facebook-login'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import Axios from 'axios';
 
 const SignScreens = (props) => {
@@ -29,6 +29,15 @@ const SignScreens = (props) => {
         // setTokenid(response.tokenId)
         // setGoogleId(response.googleId)
         const { data}= await Axios.post('/api/users/register',{tokenId:response.tokenId})
+        
+    }
+    const responseFacebook=async(response)=>{
+        console.log(response)
+        // setName(response.profileObj.name)
+        // setEmaildata(response.profileObj.email)
+        // setTokenid(response.tokenId)
+        // setGoogleId(response.googleId)
+        const { data}= await Axios.post('/api/users/register',{accessToken:response.accessToken,userID:response.userID})
         
     }
     
@@ -75,7 +84,7 @@ const SignScreens = (props) => {
 
                     </li>
                     <li>
-                        <button type="submit" className="button primary">Signin</button>
+                        <button type="submit" className="button primary">Sign-in</button>
                     </li>
                     <li>
                         <GoogleLogin 
@@ -85,7 +94,21 @@ const SignScreens = (props) => {
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}  
+                            render={renderProps => (
+                                <button onClick={renderProps.onClick} className='button secondary' disabled={renderProps.disabled}>sign-in with Google</button>
+                              )}
                                                    
+                        />
+                    </li>
+                    <li>
+                        <FacebookLogin
+                            appId="321208622552467"
+                            autoLoad={false}
+                            fields="name,email,picture"
+                            callback={responseFacebook}
+                            render={renderProps => (
+                                <button onClick={renderProps.onClick} className='button secondary'>sign-in with Facebook</button>
+                              )}
                         />
                     </li>
                     {/* <li>
