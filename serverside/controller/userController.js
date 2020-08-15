@@ -77,7 +77,7 @@ module.exports ={
             const {_id,name,email,password,email_verified,isAdmin} = await User.findOne({email:req.body.email})           
             const isMatch = await compare(req.body.password,password)
             console.log(email,isMatch)
-            if(!email||!isMatch){
+            if(!isMatch){
                 return res.send('Invalid credentials')
             }
             if(email&&isMatch){

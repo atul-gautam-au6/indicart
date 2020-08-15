@@ -8,7 +8,7 @@ import Axios from 'axios';
 
 const SignScreens = (props) => {
    const [email,setEmail] = useState('')
-   const [response,setResponse]=useState('')
+  // const [response,setResponse]=useState('')
    const [password,setPassword] = useState('')
    const userSignin = useSelector(state=>state.userSignin)
    const {loading,userInfo,error} = userSignin
@@ -17,29 +17,21 @@ const SignScreens = (props) => {
 
 
         //Google-Login
-    const [name,setName] = useState('')
-    const [emaildata,setEmaildata] = useState('')
-    const [tokenid,setTokenid] = useState('')
-    const [googleid,setGoogleId]=useState('')
+    // const [name,setName] = useState('')
+    // const [emaildata,setEmaildata] = useState('')
+    // const [tokenid,setTokenid] = useState('')
+    // const [googleid,setGoogleId]=useState('')
 
     const responseGoogle=async(response)=>{
         // console.log(response)
-        setName(response.profileObj.name)
-        setEmaildata(response.profileObj.email)
-        setTokenid(response.tokenId)
-        setGoogleId(response.googleId)
+        // setName(response.profileObj.name)
+        // setEmaildata(response.profileObj.email)
+        // setTokenid(response.tokenId)
+        // setGoogleId(response.googleId)
         const { data}= await Axios.post('/api/users/register',{tokenId:response.tokenId})
-        // console.log(data)
-        // if(data){
-        //     props.history.push(redirect)
-        // }
+        
     }
-    //     useEffect(async() => {                
-    //     return () => {
-    //         // cleanup
-    //     }
-    // }, [])
-
+    
 
 
 
@@ -56,7 +48,6 @@ const SignScreens = (props) => {
         dispatch(signin(email,password))
     }
     
-    // registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
     return (
         <div className='form'>
            <form onSubmit={submitHandler}> 
@@ -65,9 +56,7 @@ const SignScreens = (props) => {
                         <h2>Sign-in</h2>
                     </li>
                     <li>
-                        {/* {
-                                data &&<div>{data.data}</div>
-                        } */}
+                        
                         {
                             loading && <img src='/image/giiflogo.gif' />
                         }
