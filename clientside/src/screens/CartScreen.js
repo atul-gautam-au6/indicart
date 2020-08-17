@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import addToCard from '../action/addToCart'
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import removeFromCart from '../action/removeFromCart';
 
 const CartScreen = (props) => {
@@ -11,24 +11,22 @@ const CartScreen = (props) => {
 
     const productId = props.match.params.id;
     // console.log(productId)
-    const qty = props.location.search? Number(props.location.search.split("=")[1]):1
+    const qty =props.location.search ? Number(props.location.search.split("=")[1]) : 1;
     
     const dispatch = useDispatch()
 
     const removeFromCartHandler = (productId) => {
         dispatch(removeFromCart(productId));
       }
-     
+    //  console.log(cartItems)
+    // eslint-disable-next-line
     useEffect(() => {
         if(productId)
         dispatch(addToCard(productId,qty))
-        return () => {
-            // cleanup
-        }
-    }, [])
+      
+    }, [cartItems])
    
     
-
 
     const checkoutHandler = () => {
         props.history.push("/signin?redirect=shipping");
@@ -62,15 +60,14 @@ const CartScreen = (props) => {
                             <Link to={"/products/" + item.product}>{item.name}</Link>
                                             </div>
                                             <div>
-                                                Qty:
-                                                <select value={item.qty} onChange={(e)=>dispatch(addToCard(item.product,e.target.value))}>
-                                                {
-                                                    [...Array(item.countInStock).keys()].map(x=>
-                                                        <option key={x+1} value={x+1}>{x+1}</option>
-                                                    )
-                                                }
-                                                </select>
-                                                <button type="button" className="button" onClick={() => removeFromCartHandler(item.product)} >
+                                               Qty:
+                                               <select value={item.qty} onChange={(e)=>dispatch(addToCard(item.product,e.target.value))}>
+                                                    {[...Array(item.countInStock).keys()].map(x=>
+                                                            <option key={x+1} value={x+1}>{x+1}</option>
+                                                        )}
+                                                        
+                                               </select>
+                                                <button type="button" className="button primary" onClick={() => removeFromCartHandler(item.product)} >
                                                     Delete
                                                 </button>
                                             </div>

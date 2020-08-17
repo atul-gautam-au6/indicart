@@ -11,6 +11,7 @@ import Shoppingcreen from './screens/Shoppingcreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductcreateScreen from './screens/ProductcreateScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 
 function App() { 
@@ -37,13 +38,13 @@ function App() {
             <button onClick={openMenu}>
                 &#9776;
             </button>
-            <Link to="/" >MYSHoppY &#174;</Link>
+            <Link to="/" className="logo">Indi cart &#174;</Link>
           
         </div>
         <div className="header-links">
             <a href="cart.html">Cart</a>
             {
-              userInfo ? <Link to='/profile'>{userInfo.name}</Link>: 
+              userInfo&&!userInfo=='null' ? <Link to='/profile'>{userInfo.name}</Link>: 
               <Link to="/signin">Signin</Link>
             }
             
@@ -77,6 +78,7 @@ function App() {
     
     <main className="main">
        <div className="content">
+         <Route exact={true} path='/profile' component={ProfileScreen} />
          <Route exact={true} path='/register' component={Registerscreen} />
          <Route exact={true} path="/product" component={ProductcreateScreen} />
          <Route exact={true} path='/payment' component={PaymentScreen} />

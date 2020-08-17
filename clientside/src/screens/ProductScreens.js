@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import detailsProduct from '../action/productDetailsAction';
+import Rating from '../components/Rating';
 
 const ProductScreens = (props) => {
     // console.log(props)
@@ -14,7 +15,7 @@ const ProductScreens = (props) => {
         )
     const {products,loading,error}=productDetails
     const dispatch = useDispatch();
-    
+    // eslint-disable-next-line
     useEffect(() => {
         dispatch(detailsProduct(props.match.params.id))
         return () => {
@@ -26,13 +27,14 @@ const handleAddToCart = () =>{
 }
 
     return (
-        <div >
+        <div>
             <div className="back-to-result">
                 <Link to="/" >Back TO Result</Link>
             </div>
             {
                 loading ? <img src='/image/giiflogo.gif' />:
                 error ? <div>{error} </div> :(
+                    <>
                     <div className="details">
                 <div className="details-image">
                     <img src={products.image} alt="product" />
@@ -43,13 +45,18 @@ const handleAddToCart = () =>{
                             <h4>{products.name}</h4>
                         </li>
                         <li>
-                            {products.rating} Stars ({products.numReviews} Reviews)
-                        </li>
+                            <a href="#reviews">
+                                <Rating
+                                value={products.rating}
+                                text={products.numReviews + ' reviews'}
+                                />
+                            </a>
+                            </li>
                         <li>
                             Price:<b>${products.price}</b>
                         </li>
                         Description:
-                        {products.description}
+                       <div> {products.description}</div>
                     </ul>
                 </div>
                 <div className="details-action">
@@ -81,7 +88,7 @@ const handleAddToCart = () =>{
                     </ul>
                 </div>
            </div>
-                )
+               </> )
             }
            
 

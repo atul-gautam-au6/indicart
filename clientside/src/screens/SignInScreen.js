@@ -12,6 +12,7 @@ const SignScreens = (props) => {
    const [password,setPassword] = useState('')
    const userSignin = useSelector(state=>state.userSignin)
    const {loading,userInfo,error} = userSignin
+//    console.log(userInfo)
     const dispatch = useDispatch();
     const redirect = props.location.search?props.location.search.split("=")[1]:'/'
 
@@ -28,7 +29,7 @@ const SignScreens = (props) => {
         // setEmaildata(response.profileObj.email)
         // setTokenid(response.tokenId)
         // setGoogleId(response.googleId)
-        const { data}= await Axios.post('/api/users/register',{tokenId:response.tokenId})
+         await Axios.post('/api/users/register',{tokenId:response.tokenId})
         
     }
     const responseFacebook=async(response)=>{
@@ -37,21 +38,22 @@ const SignScreens = (props) => {
         // setEmaildata(response.profileObj.email)
         // setTokenid(response.tokenId)
         // setGoogleId(response.googleId)
-        const { data}= await Axios.post('/api/users/register',{accessToken:response.accessToken,userID:response.userID})
+        await Axios.post('/api/users/register',{accessToken:response.accessToken,userID:response.userID})
         
-    }
-    
+    }   
 
+// console.log(userInfo)
 
-
+// eslint-disable-next-line 
     useEffect(() => {
-        if(userInfo){
+        
+        if(userInfo&&!userInfo==='null'){
             props.history.push(redirect)
         }
         return () => {
             //cleanup
         }
-    }, [userInfo ])
+    }, [userInfo])
     const submitHandler=(e)=>{
         e.preventDefault()
         dispatch(signin(email,password))
@@ -118,7 +120,7 @@ const SignScreens = (props) => {
                     </li> */}
                    
                     <li>
-                        New to User
+                        New  User
                     </li>
                     <li>
                         <Link to={redirect=='/' ? "register" :"register?redirect=" + redirect} className="button text-center secondary">Create your account</Link>

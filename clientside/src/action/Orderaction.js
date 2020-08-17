@@ -1,7 +1,7 @@
 import Axios from "axios";
-import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL } from "../actionType";
+import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, MY_ORDER_LIST_FAIL } from "../actionType";
 
-const createOrder = (order) => async (dispatch, getState) => {
+export const createOrder = (order) => async (dispatch, getState) => {
     try {
       dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
       const { userSignin: { userInfo } } = getState();
@@ -15,5 +15,18 @@ const createOrder = (order) => async (dispatch, getState) => {
       dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });
     }
   }
-  export default createOrder
+export const listMyOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: MY_ORDER_LIST_REQUEST });
+    const { userSignin: { userInfo } } = getState();
+    const { data } = await Axios.get("/api/orders/mine", {
+      headers:
+        { Authorization: 'Bearer ' + userInfo.token }
+    });
+    dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.message });
+  }
+}
+ 
   

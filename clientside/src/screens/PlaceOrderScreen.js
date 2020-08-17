@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
-import createOrder from '../action/Orderaction';
+import { createOrder } from '../action/Orderaction';
 
 const PlaceOrderScreen = (props) => {
     // const cart = useSelector(state => state.cart);
@@ -24,21 +24,12 @@ const PlaceOrderScreen = (props) => {
     const dispatch = useDispatch();
   
     const placeOrderHandler = () => {
-      // create an order
       dispatch(createOrder({
         orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
         taxPrice, totalPrice
       }));
     }
-    // useEffect(() => {
-    //   if (success) {
-    //     props.history.push("/order/" + order._id);
-    //   }
-  
-    // }, [success]);
-    // const checkoutHandler = () => {
-    //     props.history.push("/signin?redirect=shipping");
-    //   }
+    
      
     return (
         <div>

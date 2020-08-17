@@ -11,7 +11,7 @@ const HomeScreen = (props) => {
     );
     const {products,loading,error} = productList
     const dispatch = useDispatch()
-
+// eslint-disable-next-line
     useEffect(()=>{
       dispatch(listProduct())
       return ()=>{
@@ -20,9 +20,26 @@ const HomeScreen = (props) => {
     },[])
 
     return (
-      loading ? <img src='/image/giiflogo.gif' />:
-      error ? <div>{error}</div> :
-        <ul className="products">
+      <>
+      <ul className="filter">
+        <li>
+            <form>
+                <input name="searchKeyword" />
+                <button type="submit">Search</button>
+            </form>
+        </li>
+        <li>
+          Sort By{ ' ' }
+          <select name="sortOrder">
+                  <option value="">Newest</option>
+                  <option value="lowest">Lowest</option>
+                  <option value="highest">Highest</option>
+          </select>
+        </li>
+      </ul>
+      {loading ? (<img src='/image/giiflogo.gif' />):
+      error ? (<div>{error}</div> ):
+       ( <ul className="products">
              {
                products.map(product=>(
                   <li key={product._id}>
@@ -44,6 +61,8 @@ const HomeScreen = (props) => {
                
               
            </ul>
+       )}
+       </>
     )
 }
 

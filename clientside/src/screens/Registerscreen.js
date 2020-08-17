@@ -15,7 +15,7 @@ const Registerscreen = (props) => {
    const {loading,userInfo,error} =userRegister
     const dispatch = useDispatch();
     const redirect = props.location.search?props.location.search.split("=")[1]:'/'
-
+// eslint-disable-next-line 
     useEffect(() => {
         if(userInfo){
             props.history.push(redirect)
