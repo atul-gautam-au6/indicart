@@ -4,7 +4,7 @@ import Cookies from "js-cookie"
 import {productListReducer, productDetailReducer, productSaveReducer, productDeleteReducer} from "./reducer/productReducer";
 import cartReducer from "./reducer/cartReducer";
 import { userSignInReducer, userRegisterInReducer, userUpdateReducer } from "./reducer/UserReducer";
-import { myOrderListReducer } from "./reducer/orderReducer";
+import { myOrderListReducer, orderCreateReduce, orderdetailsReducer, orderPayReducer } from "./reducer/orderReducer";
 
 const cartItems = Cookies.getJSON("cartItems")||[]
 const userInfo = Cookies.getJSON("UserInfo")||null
@@ -19,7 +19,10 @@ const reducer =  combineReducers({
     productSave:productSaveReducer,
     userUpdate:userUpdateReducer,
     productDelete:productDeleteReducer,
-    myOrderList:myOrderListReducer
+    orderDetails:orderdetailsReducer,
+    ordercreate:orderCreateReduce,
+    myOrderList:myOrderListReducer,
+    orderPay: orderPayReducer
     
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__||compose

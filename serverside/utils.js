@@ -17,16 +17,16 @@ const getToken = (user) => {
 
 const isAuth = (req, res, next) => {
   const token = req.headers.authorization;
-  console.log(token)
+  // console.log(token)
   if (token) {
     const onlyToken = token.slice(6, token.length);
-    console.log(onlyToken)
+    // console.log(onlyToken)
     jwt.verify(onlyToken, 'configJWT_SECRET', (err, decode) => {
       if (err) {
-        console.log(err.message)
+        // console.log(err.message)
         return res.status(401).send({ message: 'Invalid Token' });
       }
-      console.log(decode)
+      // console.log(decode)
       req.user = decode;
       next();
       return;
@@ -37,7 +37,7 @@ const isAuth = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  console.log(req.user);
+  // console.log(req.user);
   if (req.user && req.user.isAdmin) {
     return next();
   }

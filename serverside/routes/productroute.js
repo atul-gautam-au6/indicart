@@ -1,6 +1,7 @@
 import express from 'express'
 import { getProductsByID,homeScreenProduct } from '../controller/productController';
 import Order from '../Model/orderModel'
+// import Order from '../Model/orderModel'
 import ProductM  from '../Model/productModel'
 import { isAuth, isAdmin } from '../utils';
 const router = express.Router()
@@ -33,8 +34,8 @@ router.post('/product',isAuth,isAdmin,async(req,res)=>{
 })
 
 router.get('/orders/mine/',async(req,res)=>{
-    console.log('hello its aworking')
-    console.log(req.params)
+    // console.log('hello its aworking')
+    // console.log(req.params)
     const orders = await Order.findOne({user:req.params.id})
     res.send(orders)
 })
@@ -70,6 +71,22 @@ router.put('/product/:id',isAuth,isAdmin,async(req,res)=>{
     return res.status(500).send({ message: ' Error in Updating Product.' });
 })
 
+router.post('/orders',isAuth,async(req,res)=>{
+    // console.log(req.body.itemsPrice)
+    const neworder = new Order({
+        orderItems:req.body.orderItems,
+        user:req.user._id,
+        shipping:req.body.shipping,
+        payment:req.body.payment,
+        itemsPrice:req.body.itemsPrice,
+        taxPrice:req.body.taxPrice,
+        shippingPrice:req.body.shippingPrice,
+        totalPrice:req.body.totalPrice
+    });
+    const newOrderCreated = await neworder.save()
+    res.status(201).send({message:'New Order created',data:newOrderCreated})
+}
+)
 
 
 export default router;

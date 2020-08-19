@@ -47,7 +47,7 @@ const SignScreens = (props) => {
 // eslint-disable-next-line 
     useEffect(() => {
         
-        if(userInfo&&!userInfo==='null'){
+        if(userInfo){
             props.history.push(redirect)
         }
         return () => {

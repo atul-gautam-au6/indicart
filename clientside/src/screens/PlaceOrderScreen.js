@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../action/Orderaction';
 
 const PlaceOrderScreen = (props) => {
-    // const cart = useSelector(state => state.cart);
-    const cart = useSelector(state =>state.cart);
-    // const orderCreate = useSelector(state => state.orderCreate);
-    // const { loading, success, error, order } = orderCreate;
+
+    const cart = useSelector(state => state.cart);
+    const orderCreate = useSelector(state => state.ordercreate);
+    // console.log(orderCreate)
+    const { loading, success, error, order } = orderCreate;
+    // console.log(cart)
   
     const { cartItems, shipping, payment } = cart;
-    if (!shipping) {
+    if (!shipping.address) {
       props.history.push("/shipping");
     } else if (!payment) {
       props.history.push("/payment");
@@ -22,14 +24,19 @@ const PlaceOrderScreen = (props) => {
     const totalPrice = itemsPrice + shippingPrice + taxPrice;
   
     const dispatch = useDispatch();
-  
     const placeOrderHandler = () => {
       dispatch(createOrder({
         orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
         taxPrice, totalPrice
       }));
     }
-    
+    // console.log(success)
+    useEffect(() => {
+      if (success) {
+        props.history.push("/order/" + order._id);
+      }
+  
+    }, [success]);
      
     return (
         <div>

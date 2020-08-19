@@ -12,6 +12,7 @@ import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductcreateScreen from './screens/ProductcreateScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import OrderScreen from './screens/OrderScreen';
 
 
 function App() { 
@@ -44,7 +45,7 @@ function App() {
         <div className="header-links">
             <a href="cart.html">Cart</a>
             {
-              userInfo&&!userInfo=='null' ? <Link to='/profile'>{userInfo.name}</Link>: 
+              userInfo ? <Link to='/profile'>{userInfo.name}</Link>: 
               <Link to="/signin">Signin</Link>
             }
             
@@ -78,6 +79,7 @@ function App() {
     
     <main className="main">
        <div className="content">
+         <Route exact={true} path='/order/:id' component={OrderScreen} />
          <Route exact={true} path='/profile' component={ProfileScreen} />
          <Route exact={true} path='/register' component={Registerscreen} />
          <Route exact={true} path="/product" component={ProductcreateScreen} />
