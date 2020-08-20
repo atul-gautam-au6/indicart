@@ -53,7 +53,7 @@ const handleAddToCart = () =>{
                             </a>
                             </li>
                         <li>
-                            Price:<b>${products.price}</b>
+                            Price:<b>Rs. {products.price}</b>
                         </li>
                         Description:
                        <div> {products.description}</div>
