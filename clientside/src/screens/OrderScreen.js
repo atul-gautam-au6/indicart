@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { detailsOrder, payOrder } from '../action/Orderaction'
 import { Link } from 'react-router-dom';
-import PaypalButton from '../components/PaypalButton';
+import PaypalButton from '../components/PaypalButton.js';
 
 
 const OrderScreen = (props) => {
@@ -15,11 +15,16 @@ const OrderScreen = (props) => {
 
     const dispatch = useDispatch()
     useEffect(()=>{
+      if(successPay){
+        props.history.push('/profile')
+      }else{
+
         dispatch(detailsOrder(props.match.params.id))
+      }
         return ()=>{
 
         }
-    },[])
+    },[successPay])
     const handleSuccessPayment = (paymentResult) =>{
         dispatch(payOrder(order,paymentResult))
     }

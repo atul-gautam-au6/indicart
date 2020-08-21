@@ -1,7 +1,22 @@
 import express from 'express'
 import Order from '../Model/orderModel'
-import { isAuth } from '../utils';
+import { isAuth, isAdmin } from '../utils';
 const router = express.Router()
+
+router.get('/',isAuth,async(req,res)=>{
+    const orders = await Order.find({}).populate('user')
+    console.log(orders)
+    res.send(orders)
+})
+router.delete("/:id", isAuth, isAdmin, async (req, res) => {
+    const order = await Order.findOne({ _id: req.params.id });
+    if (order) {
+      const deletedOrder = await order.remove();
+      res.send(deletedOrder);
+    } else {
+      res.status(404).send("Order Not Found.")
+    }
+  });
 
 router.get('/:id',isAuth,async(req,res)=>{
     const orders = await Order.findOne({ _id: req.params.id })

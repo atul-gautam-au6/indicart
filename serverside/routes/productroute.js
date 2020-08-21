@@ -33,11 +33,9 @@ router.post('/product',isAuth,isAdmin,async(req,res)=>{
     
 })
 
-router.get('/orders/mine/',async(req,res)=>{
-    // console.log('hello its aworking')
-    // console.log(req.params)
-    const orders = await Order.findOne({user:req.params.id})
-    res.send(orders)
+router.get('/orders/mine/',isAuth,async(req,res)=>{    
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders);
 })
 router.delete('/products/:id',isAuth,isAdmin,async(req,res)=>{
     const deleteProduct = await ProductM.findById(req.params.id)
@@ -88,6 +86,28 @@ router.post('/orders',isAuth,async(req,res)=>{
 }
 )
 
+router.post('/products/:id/reviews',isAuth,async(req,res)=>{
+    const product = await ProductM.findById(req.params.id)
+    if (product) {
+        const review = {
+          name: req.body.name,
+          rating: Number(req.body.rating),
+          comment: req.body.comment,
+        };
+        product.reviews.push(review);
+        product.numReviews = product.reviews.length;
+        product.rating =
+          product.reviews.reduce((a, c) => c.rating + a, 0) /
+          product.reviews.length;
+        const updatedProduct = await product.save();
+        res.status(201).send({
+          data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+          message: 'Review saved successfully.',
+        });
+      } else {
+        res.status(404).send({ message: 'Product Not Found' });
+      }
+})
 
 export default router;
 

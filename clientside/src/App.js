@@ -13,6 +13,7 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductcreateScreen from './screens/ProductcreateScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import OrderScreen from './screens/OrderScreen';
+import OrdersScreen from './screens/OrdersScreen';
 
 
 function App() { 
@@ -79,6 +80,7 @@ function App() {
     
     <main className="main">
        <div className="content">
+         <Route exact={true} path='/orders' component={OrdersScreen} /> 
          <Route exact={true} path='/order/:id' component={OrderScreen} />
          <Route exact={true} path='/profile' component={ProfileScreen} />
          <Route exact={true} path='/register' component={Registerscreen} />
@@ -93,7 +95,7 @@ function App() {
        </div>
     </main>
     <footer className="footer">
-      &copy; MYSHoppY &reg;
+      &copy; All Right Reserved &reg;
     </footer>
 </div>
 </BrowserRouter>

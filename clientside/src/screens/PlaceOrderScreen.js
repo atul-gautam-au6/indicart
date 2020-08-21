@@ -8,9 +8,7 @@ const PlaceOrderScreen = (props) => {
 
     const cart = useSelector(state => state.cart);
     const orderCreate = useSelector(state => state.ordercreate);
-    // console.log(orderCreate)
     const { loading, success, error, order } = orderCreate;
-    // console.log(cart)
   
     const { cartItems, shipping, payment } = cart;
     if (!shipping.address) {
@@ -81,7 +79,7 @@ const PlaceOrderScreen = (props) => {
                         </div>
                         <div className="cart-name">
                           <div>
-                            <Link to={"/product/" + item.product}>
+                            <Link to={"/products/" + item.product}>
                               {item.name}
                             </Link>
     

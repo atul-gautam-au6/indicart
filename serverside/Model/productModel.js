@@ -1,7 +1,16 @@
 import mongoose, { Schema } from 'mongoose';
 import mongoosepaginate from 'mongoose-paginate'
-const productSchema = new Schema({
-   
+const reviewSchema = new mongoose.Schema(
+    {
+      name: { type: String, required: true },
+      rating: { type: Number, default: 0 },
+      comment: { type: String, required: true },
+    },
+    {
+      timestamps: true,
+    }
+  );
+const productSchema = new Schema({   
     category:{
         type:String,
         required:true
@@ -38,12 +47,13 @@ const productSchema = new Schema({
     },
     rating:{
         type:Number,
-        default:3
+        default:0
     },
     numReviews:{
         type:Number,
         default:0
     },
+    reviews:[reviewSchema],
     countInStack:{
         type:Number,
         default: 10
