@@ -21,8 +21,8 @@ const ProfileScreen = (props) => {
     }
     const submitHandler = (e)=>{
         e.preventDefault();
-        // console.log({userId:userInfo._id})
-        dispatch(update({userId:userInfo._id,email,name,password}))        
+        // console.log({userId:userInfo.id})
+        dispatch(update({userId:userInfo.id,email,name,password}))        
     }
     const userUpdate = useSelector(state => state.userUpdate);
         const {loading,success,error} = userUpdate

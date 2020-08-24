@@ -3,8 +3,8 @@ import productmodel from '../Model/productModel'
 
 module.exports={
    async homeScreenProduct (req,res){
-    const {category,page,perPage,limit} = req.query
-    // console.log(category)
+       console.log(req.query)
+    const {category,searchKeyword,sortOrder,page,perPage,limit} = req.query
     const option = {
         page:parseInt(page,10)||1,
         limit:parseInt(perPage,12)||12
@@ -13,8 +13,11 @@ module.exports={
         var name = category || '';
         return name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
     };
-    const regex = new RegExp(escapeRegex(category), 'gi');
-    const productroute = await  productmodel.paginate({category:regex||''},option)
+    const sortOrders = sortOrder?sortOrder==='lowest'?{price:1}:{price:-1}:{_id:-1}
+    // const finddata = await productmodel.find().sort(sortOrders)
+    const regex = new RegExp(escapeRegex(category||searchKeyword||sortOrder), 'gi');
+    const productroute = await  productmodel.paginate({$or:[{category:regex||''},{name:regex},{brand:regex}]},option)
+    // console.log(finddata)
    return  res.send(productroute.docs)
     },
 

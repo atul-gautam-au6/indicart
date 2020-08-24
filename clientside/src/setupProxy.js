@@ -4,7 +4,7 @@
         app.use(
             '/api',           
            createProxyMiddleware({
-              target: 'http://localhost:8081',
+              target: 'http://localhost:8082',
               changeOrigin: true,
             }))
         }

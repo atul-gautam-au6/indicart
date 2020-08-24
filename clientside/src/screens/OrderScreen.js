@@ -22,11 +22,14 @@ const OrderScreen = (props) => {
         dispatch(detailsOrder(props.match.params.id))
       }
         return ()=>{
-
+         
         }
     },[successPay])
     const handleSuccessPayment = (paymentResult) =>{
         dispatch(payOrder(order,paymentResult))
+    }
+    const handleCOD = (paymentResult)=>{
+      dispatch(payOrder(order,paymentResult))
     }
     return (loading ? <div>Loading ...</div> : error ? <div>{error}</div> :
 
@@ -102,7 +105,8 @@ const OrderScreen = (props) => {
                 <li className="placeorder-actions-payment">
                   {loadingPay && <div>Finishing Payment...</div>}
                 {/* <p>{order.isPaid}</p> */}
-                  {!order.isPaid &&
+                  {!order.isPaid &&order.payment.paymentMethod==='COD'?
+                  <button className='button primary full-width' onClick={handleCOD}>Order-With-COD</button>:
                     <PaypalButton
                       amount={order.totalPrice}
                       onSuccess={handleSuccessPayment} />

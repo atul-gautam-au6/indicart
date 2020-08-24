@@ -23,13 +23,25 @@ router.put('/:id',isAuth,async(req,res)=>{
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      token: getToken(updatedUser),
+      token: getToken(updatedUser)
+  
     });
   } else {
     res.status(404).send({ message: 'User Not Found' });
   }
 });
 
+router.post('/address',isAuth,async(req,res)=>{
+ 
+ const {ok}=await User.updateMany({_id:req.user._id},{$set:{'Address.address':req.body.address,'Address.city':req.body.city,'Address.postalCode':req.body.postalCode,'Address.country':req.body.country}})
+//  const updateUser =await user.save()
+//  console.log(user)
+if(ok=='1'){
+  const {Address}  =await User.findById(req.user._id)
+  console.log(Address)
+  return res.send(Address)
+}
+})
 
 
 export default router;

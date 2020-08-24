@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/',isAuth,async(req,res)=>{
     const orders = await Order.find({}).populate('user')
-    console.log(orders)
+    // console.log(orders)
     res.send(orders)
 })
 router.delete("/:id", isAuth, isAdmin, async (req, res) => {

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import {  useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import {  useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { saveshipping } from '../action/shippingAction';
+import Axios from 'axios';
 
 const Shoppingcreen = (props) => {
   
@@ -10,14 +11,34 @@ const Shoppingcreen = (props) => {
     const [city, setCity] = useState('');
     const [postalCode, setPostalCode] = useState('');
     const [country, setCountry] = useState('');
-  
+
+    const cart = useSelector(state => state.cart);
+    const {  addressUpdate } = cart;
+    console.log(cart)
+    const userSignin = useSelector(state =>state.userSignin)
+    const {userInfo} = userSignin   
+   
     const dispatch = useDispatch();
-  
+    
     const submitHandler = (e) => {
       e.preventDefault();
       dispatch(saveshipping({ address, city, postalCode, country }));
       props.history.push('payment');
     }
+    
+    useEffect(()=>{
+     
+      if(userInfo){
+        setAddress(userInfo.address[0].address);
+        setCity(userInfo.address[0].city);
+        setPostalCode(userInfo.address[0].postalCode);
+        setCountry(userInfo.address[0].country)
+      }
+     
+      // dispatch(l`istMyOrders());
+      return()=>{
+      }
+  },[userInfo])
     return <div>
       <CheckoutSteps step1 step2 ></CheckoutSteps>
       <div className="form">
@@ -31,28 +52,28 @@ const Shoppingcreen = (props) => {
               <label htmlFor="address">
                 Address
             </label>
-              <input type="text" name="address" id="address" onChange={(e) => setAddress(e.target.value)}>
+              <input type="text" value={address} name="address" id="address" onChange={(e) => setAddress(e.target.value)}>
               </input>
             </li>
             <li>
               <label htmlFor="city">
                 City
             </label>
-              <input type="text" name="city" id="city" onChange={(e) => setCity(e.target.value)}>
+              <input type="text" value={city} name="city" id="city" onChange={(e) => setCity(e.target.value)}>
               </input>
             </li>
             <li>
               <label htmlFor="postalCode">
                 Postal Code
             </label>
-              <input type="text" name="postalCode" id="postalCode" onChange={(e) => setPostalCode(e.target.value)}>
+              <input type="text" value={postalCode} name="postalCode" id="postalCode" onChange={(e) => setPostalCode(e.target.value)}>
               </input>
             </li>
             <li>
               <label htmlFor="country">
                 Country
             </label>
-              <input type="text" name="country" id="country" onChange={(e) => setCountry(e.target.value)}>
+              <input type="text" value={country} name="country" id="country" onChange={(e) => setCountry(e.target.value)}>
               </input>
             </li>
   

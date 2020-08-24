@@ -74,9 +74,9 @@ module.exports ={
             return res.status(404).send('invalid credentials')
         }       
         try {
-            const {_id,name,email,password,email_verified,isAdmin} = await User.findOne({email:req.body.email})           
+            const {_id,name,email,password,email_verified,isAdmin,Address} = await User.findOne({email:req.body.email})           
             const isMatch = await compare(req.body.password,password)
-            console.log(email,isMatch)
+            console.log(email,isMatch,Address)
             if(!isMatch){
                 return res.send('Invalid credentials')
             }
@@ -88,7 +88,8 @@ module.exports ={
                     email:email,
                     email_verified:email_verified,
                     isAdmin:isAdmin,
-                    token:getToken({name,email,password,_id,isAdmin})
+                    token:getToken({name,email,password,_id,isAdmin}),
+                    address:Address
                 })
                 
             }

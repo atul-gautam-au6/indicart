@@ -1,7 +1,7 @@
 
-const { CARD_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPIN, CART_SAVE_PAYMENT } = require("../actionType");
+const { CARD_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPIN, CART_SAVE_PAYMENT,CART_ADDRESS_UPDATA } = require("../actionType");
 
-function cartReducer(state={cartItems:[],shipping:{},payment:{}},action){
+function cartReducer(state={cartItems:[],shipping:{},payment:{},addressUpdate:{}},action){
     switch (action.type) {
         case CARD_ADD_ITEM:
             const item = action.payload;
@@ -17,7 +17,8 @@ function cartReducer(state={cartItems:[],shipping:{},payment:{}},action){
             return {...state ,shipping:action.payload} 
         case CART_SAVE_PAYMENT:
             return{...state,payment:action.payload}
-            
+        case CART_ADDRESS_UPDATA:
+            return{...state,address:action.payload}
         default:
            return state;
     }

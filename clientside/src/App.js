@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.css';
+import { makeStyles } from '@material-ui/core/styles';
 import {BrowserRouter,Route, Link} from "react-router-dom"
 import HomeScreen from './screens/HomeScreen'
 import productScreen from './screens/ProductScreens'
@@ -14,22 +15,35 @@ import ProductcreateScreen from './screens/ProductcreateScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrdersScreen from './screens/OrdersScreen';
-
+import { FormGroup, FormControlLabel, Switch, AppBar, Toolbar, IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+const useStyles = makeStyles((theme)=>({
+  root:{
+    flexGrow:1
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}))
 
 function App() { 
+  const classes = useStyles()
  
   const userSignin = useSelector(state=>state.userSignin)
   // getAccessTokenFromCode()
   const {userInfo} = userSignin
   // console.log(userInfo)
-
-
   const openMenu = () =>{
     document.querySelector(".sidebar").classList.add("open")
   }
   const closeMenu = () =>{
     document.querySelector(".sidebar").classList.remove("open")
   }
+
+  
   
  
   return (
@@ -50,7 +64,6 @@ function App() {
               <Link to="/signin">Signin</Link>
             }
             
-            {/* <a href="sigin.html">Sign In</a> */}
             {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
                 <a href="#">Admin</a>
@@ -64,6 +77,8 @@ function App() {
             )}
         </div>
     </header>
+    
+
 
     <aside className="sidebar">
          <h3>Shopping Categories</h3>
