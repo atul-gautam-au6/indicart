@@ -1,12 +1,12 @@
 import express from 'express'
 import User from '../Model/userModel'
-import { registerroute, signinroute, adminroute } from '../controller/userController'
+import { registerroute, signinroute, adminroute,EmailVerification } from '../controller/userController'
 import { isAuth, getToken } from '../utils';
 import {hash} from 'bcryptjs'
 const router = express.Router()
 
 router.post('/register',registerroute)
-
+router.post('/confirmation/:token',EmailVerification)
 router.post('/signin',signinroute)
 
 router.put('/:id',isAuth,async(req,res)=>{

@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import    {signin }   from '../action/userAction';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import {CircularProgress} from '@material-ui/core'
+
 import Axios from 'axios';
 
 const SignScreens = (props) => {
@@ -16,33 +18,18 @@ const SignScreens = (props) => {
     const dispatch = useDispatch();
     const redirect = props.location.search?props.location.search.split("=")[1]:'/'
 
-
-        //Google-Login
-    // const [name,setName] = useState('')
-    // const [emaildata,setEmaildata] = useState('')
-    // const [tokenid,setTokenid] = useState('')
-    // const [googleid,setGoogleId]=useState('')
-
     const responseGoogle=async(response)=>{
-        // console.log(response)
-        // setName(response.profileObj.name)
-        // setEmaildata(response.profileObj.email)
-        // setTokenid(response.tokenId)
-        // setGoogleId(response.googleId)
+        
          await Axios.post('/api/users/register',{tokenId:response.tokenId})
         
     }
     const responseFacebook=async(response)=>{
         console.log(response)
-        // setName(response.profileObj.name)
-        // setEmaildata(response.profileObj.email)
-        // setTokenid(response.tokenId)
-        // setGoogleId(response.googleId)
+        
         await Axios.post('/api/users/register',{accessToken:response.accessToken,userID:response.userID})
         
     }   
 
-// console.log(userInfo)
 
 // eslint-disable-next-line 
     useEffect(() => {
@@ -68,25 +55,25 @@ const SignScreens = (props) => {
                     </li>
                     <li>
                         
-                        {
-                            loading && <img src='/image/giiflogo.gif' />
-                        }
+                       
                         {
                             error && <div>{error}</div>
                         }
                     </li>
                     <li>
                         <label htmlFor='email'>Email</label>
-                        <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)} />
+                        <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)} required='true' />
 
                     </li>
                     <li>
                         <label htmlFor='password'>Password</label>
-                        <input type="password" name="password" id="password" onChange={(e)=>setPassword(e.target.value)} />
+                        <input type="password" name="password" id="password" onChange={(e)=>setPassword(e.target.value)} required='true'/>
 
                     </li>
                     <li>
-                        <button type="submit" className="button primary">Sign-in</button>
+                        <button type="submit" className="button primary" disabled={loading}>
+                        {loading&&<CircularProgress size={15} />}
+                            Sign-in</button>
                     </li>
                     <li>
                         <GoogleLogin 
@@ -113,12 +100,10 @@ const SignScreens = (props) => {
                               )}
                         />
                     </li>
-                    {/* <li>
-                        <facebookLogin 
-                            
-                        />
-                    </li> */}
-                   
+                    <li>
+
+                   <Link >Forgat Password</Link>
+                    </li>
                     <li>
                         New  User
                     </li>

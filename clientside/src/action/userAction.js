@@ -2,15 +2,28 @@ import Cookies from 'js-cookie'
 const { USER_SIGN_REQUEST,USER_SIGN_SUCCESS,USER_SIGN_FAIL, USER_SIGNREQGOOGLE_REQUEST, USER_SIGNREQGOOGLE_FAIL, USER_SIGNREQGOOGLE_SUCESS, USER_LOGOUT, USER_UPDATE_REQEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, PRODUCT_REVIEW_SAVE_REQUEST, PRODUCT_REVIEW_SAVE_SUCCESS, PRODUCT_REVIEW_SAVE_FAIL, } = require("../actionType")
 const { default: Axios } = require("axios")
 
+
+
 export const signin =(email,password)=>async(dispatch)=>{
      dispatch({type:USER_SIGN_REQUEST,payload:{email,password}})
     try {
         const {data} = await Axios.post('/api/users/signin',{email,password})
-        if(!data){
+        console.log(data)
+        if(!data ){
             dispatch({type:USER_SIGN_FAIL,payload:'Invalid Credentials'})
         }
-        dispatch({type:USER_SIGN_SUCCESS,payload:data})
-        Cookies.set('UserInfo',JSON.stringify(data))
+        if(data.message==='email not confirmed'){
+            dispatch({type:USER_SIGN_FAIL,payload:`Email-Confirmation failed `})
+        }
+        if(data.msg==="Invalid Credentials"){
+            dispatch({type:USER_SIGN_FAIL,payload:`Invalid Credentials`})
+        }
+        if(data.msg==="login-success"){
+            dispatch({type:USER_SIGN_SUCCESS,payload:data})
+            alert('login-success')
+            Cookies.set('UserInfo',JSON.stringify(data))
+        }
+        
     } catch (error) {
         dispatch({type:USER_SIGN_FAIL,payload:'Invalid Credentials'})
         
