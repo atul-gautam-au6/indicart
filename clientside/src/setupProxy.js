@@ -4,10 +4,8 @@
         app.use(
             '/api',           
            createProxyMiddleware({
-              target: 'http://localhost:8082',
+              target: 'http://localhost:6001',
               changeOrigin: true,
             }))
         }
-    //     app.use(proxy('/api/**', { target: 'http://localhost:5000' }));
-    //     app.use(proxy('/otherApi/**', { target: 'http://localhost:5000' }));
-    // };
+    

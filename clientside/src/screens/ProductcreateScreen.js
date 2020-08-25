@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {ProductsaveAction, deleteProduct} from '../action/productsave'
 import listProduct from '../action/productAction';
+import Axios from 'axios';
+// import { response } from 'express';
 
 const ProductcreateScreen = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -16,7 +18,7 @@ const ProductcreateScreen = (props) => {
     const [countInStack,setCountInStack] = useState('')
     const [pack_size,setPack_size] = useState('')
    const [description,setDescription] = useState('')
-
+    const [uploading,setUploading] = useState(false)
    const [numRevies,setNumRevies] = useState('')
    const [rating,setRating] = useState('')
 
@@ -58,6 +60,25 @@ const ProductcreateScreen = (props) => {
     
     const deleteHandler= (product) =>{
         dispatch(deleteProduct(product._id))
+    }
+    const uploadFileHandler = (e)=>{
+        const file = e.target.files[0];
+        const bodyFormData = new FormData()
+        bodyFormData.append('image',file)
+        setUploading(true)
+        Axios.post('/api/uploads',bodyFormData,{
+            headers:{
+                'Content-type':'multipart/form-data'
+            }
+        })
+        .then((response)=>{
+            setImage(response.data)
+            setUploading(false)
+        })
+        .catch((err)=>{
+            console.log(err.message)
+            setUploading(false)
+        })
     }
 
     const submitHandler=(e)=>{
@@ -127,6 +148,8 @@ const ProductcreateScreen = (props) => {
                     <li>
                         <label htmlFor='image'>Image</label>
                         <input type="text" value={image} name="image" id="image" onChange={(e)=>setImage(e.target.value)} />
+                        <input type='file' onChange={uploadFileHandler}></input>
+                        {uploading&&<div>uploading...</div>}
                     </li>
                     <li>
                         <label htmlFor='countInStack'>QTY</label>

@@ -5,6 +5,7 @@ import express from 'express';
 import userRoute from './serverside/routes/userRoutes'
 import productRoute from './serverside/routes/productroute'
 import orderRoute from './serverside/routes/orderRoute'
+import uploadRoute from './serverside/routes/uploadRoute'
 import db from './serverside/db';
 import bodyParser from 'body-parser'
 import { PAYPAL_CLIENT_ID } from './serverside/config';
@@ -13,6 +14,7 @@ import { PAYPAL_CLIENT_ID } from './serverside/config';
 const app = express()
 app.use(bodyParser.json())
 // console.log(process.env.JWT_SECRET_KEY)
+app.use('/api/uploads',uploadRoute)
 app.use('/api',productRoute)
 app.use('/api/users',userRoute)
 app.use('/api/orders',orderRoute)
@@ -26,6 +28,6 @@ if(process.env.NODE_EVR==='production'){
     app.use(express.static('../clienside/build'))
 }
 
-app.listen(8082,()=>{
-    console.log('server running at port number '+ 8082)
+app.listen(6001,()=>{
+    console.log('server running at port number '+ 6001)
 })

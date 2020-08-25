@@ -1,7 +1,7 @@
 
 const { CARD_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPIN, CART_SAVE_PAYMENT,CART_ADDRESS_UPDATA } = require("../actionType");
 
-function cartReducer(state={cartItems:[],shipping:{},payment:{},addressUpdate:{}},action){
+function cartReducer(state={cartItems:[],shipping:{},payment:{}},action){
     switch (action.type) {
         case CARD_ADD_ITEM:
             const item = action.payload;

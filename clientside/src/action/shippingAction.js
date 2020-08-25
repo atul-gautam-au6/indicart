@@ -9,7 +9,7 @@ export const saveshipping = (data) =>async(dispatch,getState)=>{
         headers: {
             Authorization: 'Bearer' + userInfo.token
         }})
-   dispatch({type:CART_ADDRESS_UPDATA,payload:datam[0]})
+//    dispatch({type:CART_ADDRESS_UPDATA,payload:datam[0]})
     } catch (error) {
         console.log(error.message)
     }
