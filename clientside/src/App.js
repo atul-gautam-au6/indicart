@@ -17,6 +17,7 @@ import OrderScreen from './screens/OrderScreen';
 import OrdersScreen from './screens/OrdersScreen';
 import { FormGroup, FormControlLabel, Switch, AppBar, Toolbar, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import EmailConfirm from './screens/EmailConfirm';
 const useStyles = makeStyles((theme)=>({
   root:{
     flexGrow:1
@@ -94,6 +95,7 @@ function App() {
     
     <main className="main">
        <div className="content">
+         <Route excact={true} path='/user/emailConfirmation/:token' component={EmailConfirm} />
          <Route exact={true} path='/orders' component={OrdersScreen} /> 
          <Route exact={true} path='/order/:id' component={OrderScreen} />
          <Route exact={true} path='/profile' component={ProfileScreen} />

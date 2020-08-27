@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function Rating(props) {
+  console.log(props)
   return !props.value ? (
     <div></div>
   ) : (

@@ -1,60 +1,16 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { detailsOrder, payOrder, confirmEmail } from '../action/Orderaction'
-import { Link } from 'react-router-dom';
-import PaypalButton from '../components/PaypalButton.js';
-// import LoadingOverlay from 'react-loading-overlay';
-import {CircularProgress} from '@material-ui/core'
-import ConfirmOrder from './ConfirmOrder';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import LoadingOverlay from 'react-loading-overlay';
+import React from 'react'
+import { Link } from '@material-ui/core'
 
-
-
-
-
-
-const OrderScreen = (props) => {
-    const orderPay = useSelector(state => state.orderPay);
-  const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
-  // console.log(successPay)
-    const orderDetails = useSelector(state => state.orderDetails);
-    const { loading, order, error } = orderDetails;
-    // console.log(orderDetails)
-  const emailsendsuccess = useSelector(state=>state.orderConformEmail)
-  const {loading:emailSendConform,success:emailSuccess,error:emailError} = emailsendsuccess
-    const dispatch = useDispatch()
-    useEffect(()=>{
-      if(successPay){
-        dispatch(confirmEmail(order))
-        if(emailSuccess){
-          alert('your order has been successed')
-          props.history.push('/profile')
-        }
-
-      }else{
-
-        dispatch(detailsOrder(props.match.params.id))
-      }
-        return ()=>{
-         
-        }
-    },[successPay])
-    const handleSuccessPayment = (paymentResult) =>{
-        dispatch(payOrder(order,paymentResult))
-    }
-    const handleCOD = (paymentResult)=>{
-      dispatch(payOrder(order,paymentResult))
-    }
+const ConfirmOrder = ({orderDetails}) => {
+    console.log(orderDetails)
+    const {order} = orderDetails
     return (
-      error ? <div>{error}</div> :loading ? <div><CircularProgress size={15} /></div> : 
-        !order.isPaid?
         <div>
+            <h1>Order Details</h1>
           <div className="placeorder">
             <div className="placeorder-info">
-              <div>
-                <h3>
+              <div >
+                <h3 className='color-green'>
                   Shipping
               </h3>
                 <div>
@@ -65,22 +21,41 @@ const OrderScreen = (props) => {
                   {order.isDelivered ? "Delivered at " + order.deliveredAt : "Not Delivered."}
                 </div>
               </div>
+
               <div>
-                <h3>Payment</h3>
-                <div>
+                    <h3 className='color-green'>
+                        Shipping Id's
+                    </h3>
+                    <div>
+                        <div className='placeorder-action'>
+                            <ul>
+                                
+                                <li>
+                                    <div>Order Id</div>
+                                    <div>{order._id}</div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+              </div>
+
+              <div>
+                <h3 className='color-green'>Payment</h3>
+                <div >
                   Payment Method: {order.payment.paymentMethod}
                 </div>
-                <div>
+                <div >
                   {order.isPaid ? "Paid at " + order.paidAt : "Not Paid."}
                 </div>
               </div>
               <div>
                 <ul className="cart-list-container">
                   <li>
-                    <h3>
-                      Shopping Cart
+                    <h3 className='color-green'>
+                      Shopping Items
               </h3>
-                    <div>
+                    <div className='color-green'>
                       Price
               </div>
                   </li>
@@ -120,14 +95,7 @@ const OrderScreen = (props) => {
             <div className="placeorder-action">
               <ul>
                 <li className="placeorder-actions-payment">
-                  {loadingPay && <div>Finishing Payment...</div>}
-                {/* <p>{order.isPaid}</p> */}
-                  {!order.isPaid &&order.payment.paymentMethod==='COD'?
-                  <button className='button primary full-width' onClick={handleCOD}>Order-With-COD</button>:
-                    <PaypalButton
-                      amount={order.totalPrice}
-                      onSuccess={handleSuccessPayment} />
-                  }
+                  
                 </li>
                 <li>
                   <h3>Order Summary</h3>
@@ -156,12 +124,7 @@ const OrderScreen = (props) => {
     
           </div>
         </div>
-        :
-        <ConfirmOrder
-        orderDetails={orderDetails}    
-        />
-    
     )
 }
 
-export default OrderScreen
+export default ConfirmOrder

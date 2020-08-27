@@ -33,7 +33,7 @@ router.put('/:id',isAuth,async(req,res)=>{
 
 router.post('/address',isAuth,async(req,res)=>{
  
- const {ok}=await User.updateMany({_id:req.user._id},{$set:{'Address.address':req.body.address,'Address.city':req.body.city,'Address.postalCode':req.body.postalCode,'Address.country':req.body.country}})
+ const {ok}=await User.updateMany({_id:req.user._id},{$set:{'Address.0.address':req.body.address,'Address.0.city':req.body.city,'Address.0.postalCode':req.body.postalCode,'Address.0.country':req.body.country}})
 //  const updateUser =await user.save()
 //  console.log(user)
 if(ok=='1'){

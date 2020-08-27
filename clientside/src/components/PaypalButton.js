@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import {CircularProgress} from '@material-ui/core'
+import LoadingOverlay from 'react-loading-overlay';
+
 function PaypalButton(props) {
   const [sdkReady, setSdkReady] = useState(false);
 
@@ -44,7 +47,13 @@ function PaypalButton(props) {
   }, []);
 
   if (!sdkReady) {
-    return <div>Loading...</div>
+    return <div>
+      <LoadingOverlay
+          active='active'
+          spinner
+          text='Loading your content...'
+        ><p>   pay with paypal please wait...it will take some time   </p></LoadingOverlay>
+    </div>
   }
 
   const Button = window.paypal.Buttons.driver('react', { React, ReactDOM });

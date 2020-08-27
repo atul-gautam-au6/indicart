@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout, update } from '../action/userAction'
+import {CircularProgress} from '@material-ui/core'
+import LoadingOverlay from 'react-loading-overlay';
 // import { Link } from 'react-router-dom';
 import { listMyOrders } from '../action/Orderaction';
 import { Link } from 'react-router-dom';
@@ -52,7 +54,7 @@ const ProfileScreen = (props) => {
               <h2>User Profile</h2>
             </li>
             <li>
-              {loading && <div>Loading...</div>}
+              {/* {loading && <div>Loading...</div>} */}
               {error && <div>{error}</div>}
               {success && <div>Profile Saved Successfully.</div>}
             </li>
@@ -77,7 +79,9 @@ const ProfileScreen = (props) => {
             </li>
 
             <li>
-              <button type="submit" className="button primary">Update</button>
+              <button type="submit" className="button primary" disabled={loading}>
+              {loading&&<CircularProgress size={15} />}
+                Update</button>
             </li>
             <li>
               <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button>
@@ -89,8 +93,12 @@ const ProfileScreen = (props) => {
     </div>
     <div className="profile-orders content-margined">
       {
-        loadingOrders ? <div>Loading...</div> :
-          errorOrders ? <div>{errorOrders} </div> :
+        errorOrders ? <div>{errorOrders} </div> :
+        <LoadingOverlay
+        active={loadingOrders}
+        spinner
+        text='Loading your content...'
+     >
           <table className="table">
           <thead>
             <tr>
@@ -102,7 +110,7 @@ const ProfileScreen = (props) => {
             </tr>
           </thead>
           <tbody>
-            {orders.map(order => <tr key={order._id}>
+            {orders&&orders.map(order => <tr key={order._id}>
               <td>{order._id}</td>
               <td>{order.createdAt}</td>
               <td>{order.totalPrice}</td>
@@ -113,6 +121,7 @@ const ProfileScreen = (props) => {
             </tr>)}
           </tbody>
         </table>
+        </LoadingOverlay>
       }
     </div>
   </div>

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {ProductsaveAction, deleteProduct} from '../action/productsave'
 import listProduct from '../action/productAction';
+import LoadingOverlay from 'react-loading-overlay';
+import {CircularProgress} from '@material-ui/core'
 import Axios from 'axios';
 // import { response } from 'express';
 
@@ -99,6 +101,11 @@ const ProductcreateScreen = (props) => {
     
     // registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
     return (
+    <LoadingOverlay
+        active={loading}
+        spinner
+        text='Loading your content...'
+     >
         <div className="content content-marined">
             <div className="product-header">
                 <h3>Products</h3>
@@ -114,9 +121,7 @@ const ProductcreateScreen = (props) => {
                         <h2>Ceate-Product</h2>
                     </li>
                     <li>
-                        {
-                            loadingSave && <img src='/image/giiflogo.gif' />
-                        }
+                       
                         {
                             errorSave && <div>{errorSave}</div>
                         }
@@ -161,7 +166,8 @@ const ProductcreateScreen = (props) => {
                         <input type="text" value={description} name="description" id="description" onChange={(e)=>setDescription(e.target.value)} />
                     </li>
                     <li>
-                        <button type="submit" className="button primary">
+                        <button type="submit" className="button primary" disabled={loadingSave}>
+                        {loadingSave&&<CircularProgress size={15} />}
                             {id ? 'Update' : 'Create'}
                         </button>
                     </li>
@@ -204,7 +210,8 @@ const ProductcreateScreen = (props) => {
                             <td>{product.brand}</td>
                             <td>
                                 <button className="button" onClick={()=>openModal(product)}>Edit</button>{' '}
-                                <button className="button" onClick={()=> deleteHandler(product)}>Delete</button>
+                                <button className="button" onClick={()=> deleteHandler(product)} disabled={loadingDelete}>
+                                {loadingDelete&&<CircularProgress size={15} />}Delete</button>
                             </td>
                         </tr>
                         ))}
@@ -213,7 +220,7 @@ const ProductcreateScreen = (props) => {
             </div>
         </div>
        
-            
+         </LoadingOverlay>   
     )
 }
 

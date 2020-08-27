@@ -2,6 +2,10 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { listOrders, deleteOrder } from '../action/Orderaction'
+import LoadingOverlay from 'react-loading-overlay';
+import {CircularProgress} from '@material-ui/core'
+
+
 
 const OrdersScreen = (props) => {
     const orderList = useSelector(state=>state.orderList)
@@ -24,7 +28,11 @@ const OrdersScreen = (props) => {
     }
 
 
-    return loading ? <div>Loading...</div> :
+    return <LoadingOverlay
+          active={loading}
+          spinner
+          text='Loading your content...'
+      >
     <div className="content content-margined">
 
       <div className="order-header">
@@ -47,7 +55,7 @@ const OrdersScreen = (props) => {
             </tr>
           </thead>
           <tbody>
-            {orders.map(order => (<tr key={order._id}>
+            {orders&&orders.map(order => (<tr key={order._id}>
               <td>{order._id}</td>
               <td>{order.createdAt}</td>
               <td>{order.totalPrice}</td>
@@ -59,7 +67,8 @@ const OrdersScreen = (props) => {
               <td>
                 <Link to={"/order/" + order._id} className="button secondary" >Details</Link>
                 {' '}
-                <button type="button" onClick={() => deleteHandler(order)} className="button secondary">Delete</button>
+                <button type="button" onClick={() => deleteHandler(order)} className="button secondary" disabled={loadingDelete}>
+                {loadingDelete&&<CircularProgress size={15} />}Delete</button>
               </td>
             </tr>))}
           </tbody>
@@ -67,7 +76,7 @@ const OrdersScreen = (props) => {
 
       </div>
     </div>
-    
+    </LoadingOverlay>
 }
 
 export default OrdersScreen

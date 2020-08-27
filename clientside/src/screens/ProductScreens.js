@@ -5,6 +5,9 @@ import detailsProduct from '../action/productDetailsAction';
 import Rating from '../components/Rating.js';
 import { saveProductReview } from '../action/userAction';
 import { PRODUCT_REVIEW_SAVE_RESET } from '../actionType';
+import LoadingOverlay from 'react-loading-overlay';
+import {CircularProgress} from '@material-ui/core'
+
 
 const ProductScreens = (props) => {
     const [qty,setQty] = useState(1)
@@ -15,7 +18,8 @@ const ProductScreens = (props) => {
     const productDetails = useSelector(state => state.productdetailList)
     const {products,loading,error}=productDetails
     const productReviewSave = useSelector((state) => state.productReviewSave);
-  const { success: productSaveSuccess } = productReviewSave;
+  const {loading:reviewLoading, success: productSaveSuccess } = productReviewSave;
+  console.log(productReviewSave)
     const dispatch = useDispatch();
     // eslint-disable-next-line
     useEffect(() => {
@@ -51,47 +55,52 @@ const handleAddToCart = () =>{
                 <Link to="/" >Back TO Result</Link>
             </div>
             {
-                loading ? <img src='/image/giiflogo.gif' />:
-                error ? <div>{error} </div> :(
-                    <>
+                error ? <div>{error} </div> :
+                // loading ? <img src='/image/giiflogo.gif' />:
+                (
+                    <LoadingOverlay
+          active={loading}
+          spinner
+          text='Loading your content...'
+            >
                     <div className="details">
                 <div className="details-image">
-                    <img src={products.image} alt="product" />
+                    <img src={products&&products.image} alt="product" />
                 </div>
                 <div className="details-info">
                     <ul>
                         <li>
-                            <h4>{products.name}</h4>
+                            <h4>{products&&products.name}</h4>
                         </li>
                         <li>
                             <a href="#reviews">
                                 <Rating
-                                value={products.rating}
-                                text={products.numReviews + ' reviews'}
+                                value={products&&products.rating}
+                                text={products&&products.numReviews + ' reviews'}
                                 />
                             </a>
                             </li>
                         <li>
-                            Price:<b>Rs. {products.price}</b>
+                            Price:<b>Rs. {products&&products.price}</b>
                         </li>
                         Description:
-                       <div> {products.description}</div>
+                       <div> {products&&products.description}</div>
                     </ul>
                 </div>
                 <div className="details-action">
                     <ul>
                         <li>
-                            price:{products.price}
+                            price:{products&&products.price}
                         </li>
                         <li>
-                            Status:{ products.countInStack >0 ? "In Stack" :"Unavailable" }
+                            Status:{products&& products.countInStack >0 ? "In Stack" :"Unavailable" }
                         </li>
                         <li>
                             Qty:<select value={qty} onChange={e=>{
                                 setQty(e.target.value)
                             }}>
                                 {
-                                    [...Array(products.countInStack).keys()].map(x=>
+                                    [...Array(products&&products.countInStack).keys()].map(x=>
                                             <option key={x+1} value={x+1}>{x+1}</option>
                                         )
                                 }
@@ -99,7 +108,7 @@ const handleAddToCart = () =>{
                         </li>
                         <li>
                             {
-                                products.countInStack >0 && 
+                                products&&products.countInStack >0 && 
                                 <button onClick={handleAddToCart} className="button primary">Add to Cart</button>
 
                             }
@@ -109,10 +118,10 @@ const handleAddToCart = () =>{
            </div>
            <div className="content-margined">
                 <h2>Reviews</h2>
-                {!products.reviews.length && <div>There is no review</div>}
+                {products&&!products.reviews.length && <div>There is no review</div>}
                 <ul className="review" id="reviews">
 
-                    {products.reviews.map((review)=>
+                    {products&&products.reviews.map((review)=>
                     <li key={review._id}>
                         <div>
                             <Rating value={review.rating}></Rating>
@@ -141,6 +150,7 @@ const handleAddToCart = () =>{
                                     </li>
                                     <li>
                         <button type="submit" className="button primary">
+                       { reviewLoading&& <CircularProgress size={15} />}
                           Submit
                         </button>
                       </li>
@@ -155,7 +165,7 @@ const handleAddToCart = () =>{
                 </ul>
 
            </div>
-               </> )
+               </LoadingOverlay> )
             }
            
 

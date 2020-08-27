@@ -14,9 +14,11 @@ const Shoppingcreen = (props) => {
 
     const cart = useSelector(state => state.cart);
     const {  addressUpdate } = cart;
-    console.log(cart)
+    // console.log(cart)
     const userSignin = useSelector(state =>state.userSignin)
-    const {userInfo} = userSignin   
+    // console.log(userSignin)
+    const {userInfo} = userSignin  
+    // console.log(userInfo.address) 
    
     const dispatch = useDispatch();
     
@@ -28,14 +30,13 @@ const Shoppingcreen = (props) => {
     
     useEffect(()=>{
      
-      if(userInfo){
+      if(userInfo.address[0]){
         setAddress(userInfo.address[0].address);
         setCity(userInfo.address[0].city);
         setPostalCode(userInfo.address[0].postalCode);
         setCountry(userInfo.address[0].country)
       }
      
-      // dispatch(l`istMyOrders());
       return()=>{
       }
   },[userInfo])

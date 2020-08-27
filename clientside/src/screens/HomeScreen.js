@@ -2,8 +2,8 @@ import React, {  useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import  listProduct  from '../action/productAction';
-// import Rating from '../components/Rating.js';
-import StarRating from 'react-star-rating'
+import LoadingOverlay from 'react-loading-overlay';
+import Rating from '../components/Rating';
 import { listProducts, listProductsSearch } from '../action/productsave';
 
 const HomeScreen = (props) => {
@@ -56,9 +56,15 @@ const category = props.match.params.id?props.match.params.id:''
           </select>
         </li>
       </ul>
-      {loading ? (<img src='/image/giiflogo.gif' />):
-      error ? (<div>{error}</div> ):
-       ( <ul className="products">
+      {
+        error ? (<div>{error}</div> ):
+      (
+        <LoadingOverlay
+          active={loading}
+          spinner
+          text='Loading your content...'
+        >
+        <ul className="products">
              {
                products.map(product=>(
                   <li key={product._id}>
@@ -72,13 +78,11 @@ const category = props.match.params.id?props.match.params.id:''
                             </div>
                           <div className="product-brand">{product.brand}</div>
                           <div className="product-price">Rs. {product.price}</div>
-                          <div className="product-rating"> 
-                          {/* <StarRating name="medium-rating" caption="Medium!" size={50} totalStars={5} rating={4} /> */}
-                          {/* <StarRating name="react-star-rating" caption="Rate this component!" totalStars={5} />                          */}
-                           {/* <Rating
-                            value={4}
+                          <div className="product-rating">
+                           <Rating
+                            value={product.rating}
                             text={product.numReviews + ' reviews'}
-                          /> */}
+                          />
                           </div>
                       </div>
                   </li>
@@ -86,7 +90,8 @@ const category = props.match.params.id?props.match.params.id:''
              }
                
               
-           </ul>)
+           </ul>
+           </LoadingOverlay>)
        
        
        }

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../action/Orderaction';
+import LoadingOverlay from 'react-loading-overlay';
+
 
 const PlaceOrderScreen = (props) => {
 
@@ -39,6 +41,11 @@ const PlaceOrderScreen = (props) => {
     return (
         <div>
         <CheckoutSteps step1 step2 step3 step4 ></CheckoutSteps>
+        <LoadingOverlay
+          active={loading}
+          spinner
+          text='Loading your content...'
+       >
         <div className="placeorder">
           <div className="placeorder-info">
             <div>
@@ -130,6 +137,7 @@ const PlaceOrderScreen = (props) => {
           </div>
     
         </div>
+        </LoadingOverlay>
       </div>
     
     )
