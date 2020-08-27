@@ -1,62 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import    {signin, registerinwithGoogle }   from '../action/userAction';
+import    {signin }   from '../action/userAction';
 import GoogleLogin from 'react-google-login';
-import facebookLogin from 'react-facebook-login'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import {CircularProgress} from '@material-ui/core'
+
 import Axios from 'axios';
 
 const SignScreens = (props) => {
    const [email,setEmail] = useState('')
-   const [response,setResponse]=useState('')
+  // const [response,setResponse]=useState('')
    const [password,setPassword] = useState('')
    const userSignin = useSelector(state=>state.userSignin)
    const {loading,userInfo,error} = userSignin
+//    console.log(userInfo)
     const dispatch = useDispatch();
     const redirect = props.location.search?props.location.search.split("=")[1]:'/'
 
-
-        //Google-Login
-    const [name,setName] = useState('')
-    const [emaildata,setEmaildata] = useState('')
-    const [tokenid,setTokenid] = useState('')
-    const [googleid,setGoogleId]=useState('')
-
     const responseGoogle=async(response)=>{
-        // console.log(response)
-        setName(response.profileObj.name)
-        setEmaildata(response.profileObj.email)
-        setTokenid(response.tokenId)
-        setGoogleId(response.googleId)
-        const { data}= await Axios.post('/api/users/register',{tokenId:response.tokenId})
-        // console.log(data)
-        // if(data){
-        //     props.history.push(redirect)
-        // }
+        
+         await Axios.post('/api/users/register',{tokenId:response.tokenId})
+        
     }
-    //     useEffect(async() => {                
-    //     return () => {
-    //         // cleanup
-    //     }
-    // }, [])
+    const responseFacebook=async(response)=>{
+        console.log(response)
+        
+        await Axios.post('/api/users/register',{accessToken:response.accessToken,userID:response.userID})
+        
+    }   
 
 
-
-
+// eslint-disable-next-line 
     useEffect(() => {
+        
         if(userInfo){
             props.history.push(redirect)
         }
         return () => {
             //cleanup
         }
-    }, [userInfo ])
+    }, [userInfo])
     const submitHandler=(e)=>{
         e.preventDefault()
         dispatch(signin(email,password))
     }
     
-    // registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
     return (
         <div className='form'>
            <form onSubmit={submitHandler}> 
@@ -65,28 +54,26 @@ const SignScreens = (props) => {
                         <h2>Sign-in</h2>
                     </li>
                     <li>
-                        {/* {
-                                data &&<div>{data.data}</div>
-                        } */}
-                        {
-                            loading && <img src='/image/giiflogo.gif' />
-                        }
+                        
+                       
                         {
                             error && <div>{error}</div>
                         }
                     </li>
                     <li>
                         <label htmlFor='email'>Email</label>
-                        <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)} />
+                        <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)} required='true' />
 
                     </li>
                     <li>
                         <label htmlFor='password'>Password</label>
-                        <input type="password" name="password" id="password" onChange={(e)=>setPassword(e.target.value)} />
+                        <input type="password" name="password" id="password" onChange={(e)=>setPassword(e.target.value)} required='true'/>
 
                     </li>
                     <li>
-                        <button type="submit" className="button primary">Signin</button>
+                        <button type="submit" className="button primary" disabled={loading}>
+                        {loading&&<CircularProgress size={15} />}
+                            Sign-in</button>
                     </li>
                     <li>
                         <GoogleLogin 
@@ -96,17 +83,29 @@ const SignScreens = (props) => {
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}  
+                            render={renderProps => (
+                                <button onClick={renderProps.onClick} className='button secondary' disabled={renderProps.disabled}>sign-in with Google</button>
+                              )}
                                                    
                         />
                     </li>
-                    {/* <li>
-                        <facebookLogin 
-                            
-                        />
-                    </li> */}
-                   
                     <li>
-                        New to User
+                        <FacebookLogin
+                            appId="321208622552467"
+                            autoLoad={false}
+                            fields="name,email,picture"
+                            callback={responseFacebook}
+                            render={renderProps => (
+                                <button onClick={renderProps.onClick} className='button secondary'>sign-in with Facebook</button>
+                              )}
+                        />
+                    </li>
+                    <li>
+
+                   <Link >Forgat Password</Link>
+                    </li>
+                    <li>
+                        New  User
                     </li>
                     <li>
                         <Link to={redirect=='/' ? "register" :"register?redirect=" + redirect} className="button text-center secondary">Create your account</Link>

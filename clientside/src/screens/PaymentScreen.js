@@ -1,6 +1,4 @@
 import React, {  useState } from 'react';
-// import { Link } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { savePayment } from '../action/shippingAction';
@@ -8,7 +6,7 @@ import { savePayment } from '../action/shippingAction';
 const PaymentScreen = (props) => {
   
     const [paymentMethod, setPaymentMethod] = useState('');
-
+    
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
@@ -37,7 +35,17 @@ const PaymentScreen = (props) => {
                   value="paypal"
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 ></input>
-                <label for="paymentMethod">Paypal</label>
+                <label htmlFor="paymentMethod">Paypal</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  id="paymentMethod"
+                  value="COD"
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                ></input>
+                <label htmlFor="paymentMethod">Cash-On-Delivery</label>
               </div>
             </li>
 

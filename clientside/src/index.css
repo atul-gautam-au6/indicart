@@ -2,6 +2,12 @@ html {
   font-size: 62.5%; /* 16px * 62.5 = 10px = 1rem */
   box-sizing: border-box;
 }
+.logo{
+  width: 1px;
+  height: 1px;
+
+}
+
 body {
   font: 1.6rem Helvetica;
   height: 100vh;
@@ -462,4 +468,19 @@ tbody > tr:nth-child(odd) {
 
 .categories a:hover {
   background-color: #c0c0c0;
+}
+
+.fp-container{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+background:#f8f8f8ad;
+}
+.fp-container .fp-loader{
+top:30%;
+left:48%;
+z-index:1000;
+position:absolute;
 }

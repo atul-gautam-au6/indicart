@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
-import createOrder from '../action/Orderaction';
+import { createOrder } from '../action/Orderaction';
 
 const PlaceOrderScreen = (props) => {
-    // const cart = useSelector(state => state.cart);
-    const cart = useSelector(state =>state.cart);
-    // const orderCreate = useSelector(state => state.orderCreate);
-    // const { loading, success, error, order } = orderCreate;
+
+    const cart = useSelector(state => state.cart);
+    const orderCreate = useSelector(state => state.ordercreate);
+    const { loading, success, error, order } = orderCreate;
   
     const { cartItems, shipping, payment } = cart;
-    if (!shipping) {
+    if (!shipping.address) {
       props.history.push("/shipping");
     } else if (!payment) {
       props.history.push("/payment");
@@ -22,23 +22,19 @@ const PlaceOrderScreen = (props) => {
     const totalPrice = itemsPrice + shippingPrice + taxPrice;
   
     const dispatch = useDispatch();
-  
     const placeOrderHandler = () => {
-      // create an order
       dispatch(createOrder({
         orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
         taxPrice, totalPrice
       }));
     }
-    // useEffect(() => {
-    //   if (success) {
-    //     props.history.push("/order/" + order._id);
-    //   }
+    // console.log(success)
+    useEffect(() => {
+      if (success) {
+        props.history.push("/order/" + order._id);
+      }
   
-    // }, [success]);
-    // const checkoutHandler = () => {
-    //     props.history.push("/signin?redirect=shipping");
-    //   }
+    }, [success]);
      
     return (
         <div>
@@ -77,13 +73,13 @@ const PlaceOrderScreen = (props) => {
               </div>
                     :
                     cartItems.map(item =>
-                      <li>
+                      <li key={item._id}>
                         <div className="cart-image">
                           <img src={item.image} alt="product" />
                         </div>
                         <div className="cart-name">
                           <div>
-                            <Link to={"/product/" + item.product}>
+                            <Link to={"/products/" + item.product}>
                               {item.name}
                             </Link>
     
@@ -93,7 +89,7 @@ const PlaceOrderScreen = (props) => {
                           </div>
                         </div>
                         <div className="cart-price">
-                          ${item.price}
+                          Rs. {item.price}
                         </div>
                       </li>
                     )
@@ -113,19 +109,19 @@ const PlaceOrderScreen = (props) => {
               </li>
               <li>
                 <div>Items</div>
-                <div>${itemsPrice}</div>
+                <div>Rs. {itemsPrice}</div>
               </li>
               <li>
                 <div>Shipping</div>
-                <div>${shippingPrice}</div>
+                <div>Rs. {shippingPrice}</div>
               </li>
               <li>
                 <div>Tax</div>
-                <div>${taxPrice}</div>
+                <div>Rs. {taxPrice}</div>
               </li>
               <li>
                 <div>Order Total</div>
-                <div>${totalPrice}</div>
+                <div>Rs. {totalPrice}</div>
               </li>
             </ul>
     

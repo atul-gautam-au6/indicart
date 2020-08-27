@@ -6,10 +6,19 @@ const registerin =(name,email,password)=>async(dispatch)=>{
     dispatch({type:USER_REGISTER_REQUEST,payload:{name,email,password}})
     try {
         const {data} = await Axios.post('/api/users/register',{name,email,password})
-        dispatch({type:USER_REGISTER_SUCCESS,payload:data})
-        Cookies.set('UserInfo',JSON.stringify(data))
+        // console.log(data)
+        if(data.msg==='User Already Registered here'){
+            alert('this User Already Registerd over Here ??')
+            dispatch({type:USER_REGISTER_FAIL,payload:'User Registration Failled'})
+        }
+        if(data.msg==="user registration success"){
+
+            dispatch({type:USER_REGISTER_SUCCESS,payload:data})
+            alert('User Register Success please Check your Email!')
+            Cookies.set('UserInfo',JSON.stringify(data))
+        }
     } catch (error) {
-        dispatch({type:USER_REGISTER_FAIL,payload:'Invalid Credentials'})
+        dispatch({type:USER_REGISTER_FAIL,payload:'User Registration Failled'})
         
     }
 }
