@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-const {USER_EMAIL_CONFORM_REQ,USER_EMAIL_CONFORM_SUCCESS,USER_EMAIL_CONFORM_FAIL, USER_SIGN_REQUEST,USER_SIGN_SUCCESS,USER_SIGN_FAIL, USER_SIGNREQGOOGLE_REQUEST, USER_SIGNREQGOOGLE_FAIL, USER_SIGNREQGOOGLE_SUCESS, USER_LOGOUT, USER_UPDATE_REQEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, PRODUCT_REVIEW_SAVE_REQUEST, PRODUCT_REVIEW_SAVE_SUCCESS, PRODUCT_REVIEW_SAVE_FAIL, USER_EMAIL_GET_REQEST, USER_EMAIL_GET_FAIL, } = require("../actionType")
+const {USER_EMAIL_CONFORM_VAL_REQ,USER_EMAIL_CONFORM_VAL_FAIL,USER_EMAIL_CONFORM_VAL_SUCCESS,USER_EMAIL_CONFORM_REQ,USER_EMAIL_CONFORM_SUCCESS,USER_EMAIL_CONFORM_FAIL, USER_SIGN_REQUEST,USER_SIGN_SUCCESS,USER_SIGN_FAIL, USER_SIGNREQGOOGLE_REQUEST, USER_SIGNREQGOOGLE_FAIL, USER_SIGNREQGOOGLE_SUCESS, USER_LOGOUT, USER_UPDATE_REQEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, PRODUCT_REVIEW_SAVE_REQUEST, PRODUCT_REVIEW_SAVE_SUCCESS, PRODUCT_REVIEW_SAVE_FAIL, USER_EMAIL_GET_REQEST, USER_EMAIL_GET_FAIL, USER_FORGATE_PASSWORD_SUCCESS, USER_FORGATE_PASSWORD_REQ, USER_FORGATE_PASSWORD_FAIL, } = require("../actionType")
 const { default: Axios } = require("axios")
 
 
@@ -75,5 +75,29 @@ export const emailConfirm = (token)=>async(dispatch)=>{
         dispatch({type:USER_EMAIL_CONFORM_SUCCESS,payload:data})
     } catch (error) {
         dispatch({ type:USER_EMAIL_CONFORM_FAIL, payload: error.message });
+    }
+}
+
+export const forgetPasswordActio = (email)=>async(dispatch)=>{
+    try {
+        dispatch({type:USER_FORGATE_PASSWORD_REQ,type:email})
+        console.log(email)
+        const data = await Axios.post('/api/users/forgatePassword/'+email)
+        console.log(data)
+        dispatch({type:USER_FORGATE_PASSWORD_SUCCESS,payload:data})
+    } catch (error) {
+        dispatch({type:USER_FORGATE_PASSWORD_FAIL,payload:error.message})
+    }
+}
+
+export const emailConfirmPassword = (token)=>async(dispatch)=>{
+    try {
+        dispatch({type:USER_EMAIL_CONFORM_VAL_REQ,payload:token})
+        // console.log(token)
+        const {data} = await  Axios.get(`/api/users/emailPassconfirm/${token}`)
+        // console.log(data)
+        dispatch({type:USER_EMAIL_CONFORM_VAL_SUCCESS,payload:data})
+    } catch (error) {
+        dispatch({ type:USER_EMAIL_CONFORM_VAL_FAIL, payload: error.message });
     }
 }

@@ -3,8 +3,10 @@ import User from '../Model/userModel'
 import { registerroute, signinroute, adminroute,EmailVerification } from '../controller/userController'
 import { isAuth, getToken } from '../utils';
 import {hash} from 'bcryptjs'
-import { TokenExpiredError, verify } from 'jsonwebtoken';
-import { JWT_SECRET_KEY } from '../config';
+import { TokenExpiredError, verify, sign } from 'jsonwebtoken';
+import { JWT_SECRET_KEY, PASSWORD, EMAIL } from '../config';
+import nodemailer from 'nodemailer'
+import { CostExplorer } from 'aws-sdk';
 const router = express.Router()
 
 router.post('/register',registerroute)
@@ -40,7 +42,7 @@ router.post('/address',isAuth,async(req,res)=>{
 //  console.log(user)
 if(ok=='1'){
   const {Address}  =await User.findById(req.user._id)
-  console.log(Address)
+  // console.log(Address)
   return res.send(Address)
 }
 })
@@ -57,6 +59,44 @@ router.get('/emailconfirm/:token',async(req,res)=>{
            }
 //  console.log(data)
 
+})
+
+router.post('/forgatePassword/:email',async(req,res)=>{
+  console.log(req.params.email)
+  const email = req.params.email;
+  const user =await User.findOne({email:email})
+  console.log(user)
+      if(user){
+        const accessToken = sign({id:user._id},JWT_SECRET_KEY,{
+          expiresIn:'1h'
+      })
+      const transport = nodemailer.createTransport({
+        host:'smtp.gmail.com',
+        port:465,
+        secure:true,
+        auth:{
+            user:EMAIL,
+            pass:PASSWORD                    
+        }
+    })
+    const url = `http://localhost:3000/user/passwordconfirm/${accessToken}`;
+               
+                 const { response}=  await transport.sendMail({
+                       to:user.email,
+                       subject:'IndiCart-forgate-password',
+                       html:`please click on <a href=${url}>forgate_password </a> `
+                   })
+                   if(response){
+                       console.log('working...')
+                       return res.send({msg:'user forget-password success',user:user})
+                   }
+      }
+
+  else
+  {
+    console.log('user-not-found')
+    return res.send('user-not-found')
+  }
 })
 
 export default router;

@@ -8,6 +8,7 @@ import CartScreen from './screens/CartScreen';
 import SignScreens from './screens/SignInScreen';
 import Registerscreen from './screens/Registerscreen';
 import { useSelector, useDispatch } from 'react-redux';
+// import ForgatepasswordAfterEmail from './screens/ForgatepasswordAfterEmail'
 import Shoppingcreen from './screens/Shoppingcreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
@@ -15,9 +16,10 @@ import ProductcreateScreen from './screens/ProductcreateScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrdersScreen from './screens/OrdersScreen';
-import { FormGroup, FormControlLabel, Switch, AppBar, Toolbar, IconButton } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+// import { FormGroup, FormControlLabel, Switch, AppBar, Toolbar, IconButton } from '@material-ui/core';
+// import MenuIcon from '@material-ui/icons/Menu';
 import EmailConfirm from './screens/EmailConfirm';
+import ForgatepasswordAfterEmail from './screens/ForgatepasswordAfterEmail';
 const useStyles = makeStyles((theme)=>({
   root:{
     flexGrow:1
@@ -95,6 +97,7 @@ function App() {
     
     <main className="main">
        <div className="content">
+         <Route exact={true} path='/user/passwordconfirm/:token' component={ForgatepasswordAfterEmail} />
          <Route excact={true} path='/user/emailconfirm/:token' component={EmailConfirm} />
          <Route exact={true} path='/orders' component={OrdersScreen} /> 
          <Route exact={true} path='/order/:id' component={OrderScreen} />

@@ -103,7 +103,7 @@ const SignScreens = (props) => {
                     </li>
                     <li>
 
-                  <ForgatePassword>Forgate Password</ForgatePassword>
+                  
                     </li>
                     <li>
                         New  User
@@ -113,6 +113,7 @@ const SignScreens = (props) => {
                     </li>
                 </ul>
            </form>
+           <ForgatePassword>Forgate Password</ForgatePassword>
         </div>
             
     )
