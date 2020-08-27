@@ -86,11 +86,12 @@ export const listMyOrders = () => async (dispatch, getState) => {
       dispatch({ type: ORDER_DELETE_FAIL, payload: error.message });
     }
   }
-  export const confirmEmail = (order) =>async(dispatch,getState)=>{
+  export const confirmEmail = (order) =>async(dispatch, getState)=>{
     try {
       dispatch({ type: ORDER_CONFORM_REQUEST, payload: order });
       const { userSignin: { userInfo } } = getState();
-      const { data } = await Axios.post("/api/orders/confirm" , {
+      console.log(userInfo.token)
+      const { data } = await Axios.post("/api/orders/confirmOrderEmail", order,{
         headers:
           { Authorization: 'Bearer' + userInfo.token }
       });

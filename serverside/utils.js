@@ -17,10 +17,10 @@ const getToken = (user) => {
 
 const isAuth = (req, res, next) => {
   const token = req.headers.authorization;
-  // console.log(token)
+  // console.log('mytokek:',token)
   if (token) {
     const onlyToken = token.slice(6, token.length);
-    // console.log(onlyToken)
+    // console.log('onlyToken:' ,onlyToken)
     jwt.verify(onlyToken, 'configJWT_SECRET', (err, decode) => {
       if (err) {
         // console.log(err.message)

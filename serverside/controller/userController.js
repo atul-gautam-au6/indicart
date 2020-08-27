@@ -75,7 +75,7 @@ module.exports ={
                })
 
             //    console.log('transport ',transport )
-               const url = `http://localhost:6001/api/user/confirmation/${accessToken}`;
+               const url = `http://localhost:3000/user/emailconfirm/${accessToken}`;
                
                  const { response}=  await transport.sendMail({
                        to:NewUser.email,

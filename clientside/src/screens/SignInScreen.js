@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import    {signin }   from '../action/userAction';
 import GoogleLogin from 'react-google-login';
+import ForgatePassword from './ForgatePassword'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import {CircularProgress} from '@material-ui/core'
 
@@ -102,7 +103,7 @@ const SignScreens = (props) => {
                     </li>
                     <li>
 
-                   <Link >Forgat Password</Link>
+                  <ForgatePassword>Forgate Password</ForgatePassword>
                     </li>
                     <li>
                         New  User

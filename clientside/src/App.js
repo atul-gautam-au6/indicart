@@ -95,7 +95,7 @@ function App() {
     
     <main className="main">
        <div className="content">
-         <Route excact={true} path='/user/emailConfirmation/:token' component={EmailConfirm} />
+         <Route excact={true} path='/user/emailconfirm/:token' component={EmailConfirm} />
          <Route exact={true} path='/orders' component={OrdersScreen} /> 
          <Route exact={true} path='/order/:id' component={OrderScreen} />
          <Route exact={true} path='/profile' component={ProfileScreen} />

@@ -3,6 +3,8 @@ import User from '../Model/userModel'
 import { registerroute, signinroute, adminroute,EmailVerification } from '../controller/userController'
 import { isAuth, getToken } from '../utils';
 import {hash} from 'bcryptjs'
+import { TokenExpiredError, verify } from 'jsonwebtoken';
+import { JWT_SECRET_KEY } from '../config';
 const router = express.Router()
 
 router.post('/register',registerroute)
@@ -42,6 +44,19 @@ if(ok=='1'){
   return res.send(Address)
 }
 })
+router.get('/emailconfirm/:token',async(req,res)=>{
+  // console.log(req.params.token)
+  const token = req.params.token
+ const {id}= verify(token, JWT_SECRET_KEY)
+ const{ nModified }= await User.updateOne({_id:id},{$set:{email_verified:true}})
+           if(nModified == 1){
+               console.log('Email verify Success')
+               req.params.token=null
+             return  res.send({msg:'Email Verify Success'})
+  
+           }
+//  console.log(data)
 
+})
 
 export default router;

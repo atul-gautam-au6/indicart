@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { json } from "body-parser";
 
-const { USER_SIGN_REQUEST, USER_SIGN_SUCCESS, USER_SIGN_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_SIGNREQGOOGLE_REQUEST, USER_SIGNREQGOOGLE_SUCESS, USER_SIGNREQGOOGLE_FAIL, USER_LOGOUT, USER_UPDATE_REQEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL } = require("../actionType");
+const { USER_SIGN_REQUEST, USER_SIGN_SUCCESS, USER_SIGN_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_SIGNREQGOOGLE_REQUEST, USER_SIGNREQGOOGLE_SUCESS, USER_SIGNREQGOOGLE_FAIL, USER_LOGOUT, USER_UPDATE_REQEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_EMAIL_CONFORM_REQ, USER_EMAIL_CONFORM_FAIL, USER_EMAIL_CONFORM_SUCCESS } = require("../actionType");
 
 export const userSignInReducer =(state={},action)=>{
     switch(action.type){
@@ -37,6 +37,19 @@ export const userUpdateReducer=(state={},action)=>{
             return {loading:false,userInfo:action.payload}
         case USER_UPDATE_FAIL:
             return {loading:false,error:action.payload}         
+        default:
+            return state;
+    }
+}
+export const userEmailVerify = (state={},action)=>{
+    switch(action.type){
+        case USER_EMAIL_CONFORM_REQ:
+            return {loading:true}
+        case USER_EMAIL_CONFORM_SUCCESS:
+            return {loading:false,success:true}
+        case USER_EMAIL_CONFORM_FAIL:
+            return {loading:false,error:action.payload}
+
         default:
             return state;
     }

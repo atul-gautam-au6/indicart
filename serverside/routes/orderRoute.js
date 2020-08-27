@@ -51,11 +51,12 @@ router.put('/:id/pay',isAuth,async(req,res)=>{
         res.status(404).send({msg:'order not found'})
     }
 })
-router.post('/confirm',isAuth,async(req,res)=>{
+router.post('/confirmOrderEmail',isAuth,async(req,res)=>{
+    // console.log(req.body)
     try {
-        const {isPaid} = req.body.order;
-        if(!isPaid){
-            return res.send('your payment failled')
+        // const {isPaid} = req.body.order;
+        if(!req.body.isPaid){
+            console.log('your payment failled')
         }
         
         const transport = nodemailer.createTransport({
@@ -68,29 +69,29 @@ router.post('/confirm',isAuth,async(req,res)=>{
             }
         })
         const { response}=  await transport.sendMail({
-            to:NewUser.email,
+            to:req.user.email,
             subject:'Indicart Order-Success-Email',
             html:`
             
                     <h2>Indicart-shopping</h2>
                     <p>thanks for shopping to indicart</p>
                    <ul>
-                        <li>orderId: ${req.body.order._id} </li>
-                        <li>Shipping address: ${req.body.order.shipping.address}  ${req.body.order.shipping.city} ${req.body.order.shipping.postelCode} ${req.body.order.shipping.country}</li>
-                        <li>your Product: ${req.body.order.orderItems.name} (${req.body.order.orderItems.qty}) </li>
-                        <li>Payment Method: ${req.body.order.payment.paymentMethod}</li>
-                        <li>totalPrice: ${req.body.order.totalprice}</li>
+                        <li>orderId: ${req.body._id} </li>
+                        <li>Shipping address: ${req.body.shipping.address}  ${req.body.shipping.city} ${req.body.shipping.postelCode} ${req.body.shipping.country}</li>
+                        <li>your Product: ${req.body.orderItems.name} (${req.body.orderItems.qty}) </li>
+                        <li>Payment Method: ${req.body.payment.paymentMethod}</li>
+                        <li>totalPrice: ${req.body.totalprice}</li>
                    </ul>
             `
         })
         if(response){
             console.log('working...')
-            return res.send({msg:'user registration success',newuser:NewUser})
+            return res.send({msg:'order conform email has been sent successed',status:'email send success'})
         }
 
     } catch (error) {
         console.log('email-conform-error',error.message)
-    }
+    } 
 })
 
 export default router;
