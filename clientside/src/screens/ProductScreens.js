@@ -19,7 +19,7 @@ const ProductScreens = (props) => {
     const {products,loading,error}=productDetails
     const productReviewSave = useSelector((state) => state.productReviewSave);
   const {loading:reviewLoading, success: productSaveSuccess } = productReviewSave;
-  console.log(productReviewSave)
+//   console.log(productReviewSave)
     const dispatch = useDispatch();
     // eslint-disable-next-line
     useEffect(() => {

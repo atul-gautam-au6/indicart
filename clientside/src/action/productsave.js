@@ -51,12 +51,13 @@ export const deleteProduct = (productId) => async (dispatch,getState)=>{
 export const listProductsSearch = (
     category='',
     searchKeyword='',
-    sortOrder=''
+    sortOrder='',
+    page=''
 )=>async(dispatch)=>{
     try {
         dispatch({type:PRODUCT_LIST_REQ})
         const {data} = await Axios.get(
-            '/api/products?category='+category+'&searchKeyword='+searchKeyword+'&sortOrder='+sortOrder
+            '/api/products?category='+category+'&searchKeyword='+searchKeyword+'&sortOrder='+sortOrder+'&page='+page
         )
         dispatch({type:PRODUCT_LIST_SUCCESS,payload:data})
     } catch (error) {

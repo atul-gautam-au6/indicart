@@ -3,11 +3,29 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { listOrders, deleteOrder } from '../action/Orderaction'
 import LoadingOverlay from 'react-loading-overlay';
-import {CircularProgress} from '@material-ui/core'
+import {CircularProgress, makeStyles} from '@material-ui/core'
+import DetailsOutlinedIcon from '@material-ui/icons/DetailsOutlined';
+import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone';
 
+const useStyles = makeStyles((theme)=>({
+  root:{
+    flexGrow:1
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  sizeSet:{
+    width: '5vh',
+    height: '5vh'
+  }
+}))
 
 
 const OrdersScreen = (props) => {
+  const classes = useStyles()
     const orderList = useSelector(state=>state.orderList)
     const {loading,orders,error} = orderList
 
@@ -29,7 +47,7 @@ const OrdersScreen = (props) => {
 
 
     return <LoadingOverlay
-          active={loading}
+          active={loading||loadingDelete}
           spinner
           text='Loading your content...'
       >
@@ -65,10 +83,11 @@ const OrdersScreen = (props) => {
               <td>{order.isDelivered.toString()}</td>
               <td>{order.deliveredAt}</td>
               <td>
-                <Link to={"/order/" + order._id} className="button secondary" >Details</Link>
-                {' '}
-                <button type="button" onClick={() => deleteHandler(order)} className="button secondary" disabled={loadingDelete}>
-                {loadingDelete&&<CircularProgress size={15} />}Delete</button>
+                <Link to={"/order/" + order._id}  ><DetailsOutlinedIcon className={classes.sizeSet}/></Link>
+                
+                {/* <button type="button" onClick={() => deleteHandler(order)} className="button secondary" disabled={loadingDelete}> */}
+                {/* {&&<CircularProgress size={15} />} */}
+                  <HighlightOffTwoToneIcon className={classes.sizeSet} onClick={() => deleteHandler(order)} disabled={loadingDelete}/>
               </td>
             </tr>))}
           </tbody>

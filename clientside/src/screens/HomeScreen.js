@@ -5,8 +5,25 @@ import  listProduct  from '../action/productAction';
 import LoadingOverlay from 'react-loading-overlay';
 import Rating from '../components/Rating';
 import {  listProductsSearch } from '../action/productsave';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import { makeStyles } from '@material-ui/core/styles';
+import addToCard from '../action/addToCart'
+import PaginationControlled from '../components/PaginationControlled';
+
+
+
+
+const useStyles = makeStyles((theme)=>({
+    
+    sizeSet:{
+      width: '9vh',
+      height: '5vh'
+    }
+  }))
+
 
 const HomeScreen = (props) => {
+  const classes = useStyles()
 const [searchKeyword,setSearchKeyword] = useState('')
 const [sortOrder , setSortOrder] = useState('')
 
@@ -20,7 +37,7 @@ const category = props.match.params.id?props.match.params.id:''
 
 // eslint-disable-next-line
     useEffect(()=>{
-      dispatch(listProduct(category))
+      dispatch(listProductsSearch(category))
       return ()=>{
         //
       }
@@ -73,7 +90,7 @@ const category = props.match.params.id?props.match.params.id:''
                         <img src={product.image} alt="Product" className="product-image" />
                         </Link>
                           <div className="product-name">
-                                 
+                              <AddShoppingCartIcon className={classes.sizeSet} onClick={(e)=>dispatch(addToCard(product._id,1))}/>
                                 <Link to={'/products/'+product._id}>{product.name}</Link>
                             </div>
                           <div className="product-brand">{product.brand}</div>
@@ -91,6 +108,7 @@ const category = props.match.params.id?props.match.params.id:''
                
               
            </ul>
+           <PaginationControlled />
            </LoadingOverlay>)
        
        

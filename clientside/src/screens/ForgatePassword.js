@@ -17,7 +17,7 @@ export default function ForgatePassword() {
   const dispatch = useDispatch();
   const forgetPassword  = useSelector(state=>state.forgetPassword)
   const {success,loading,error} = forgetPassword
-  console.log(forgetPassword)
+  // console.log(forgetPassword)
   const handleClickOpen = () => {
     setOpen(true);
   };

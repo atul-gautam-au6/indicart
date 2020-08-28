@@ -5,9 +5,29 @@ import listProduct from '../action/productAction';
 import LoadingOverlay from 'react-loading-overlay';
 import {CircularProgress} from '@material-ui/core'
 import Axios from 'axios';
+import EditIcon from '@material-ui/icons/Edit';
+import { makeStyles } from '@material-ui/core/styles';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 // import { response } from 'express';
 
+const useStyles = makeStyles((theme)=>({
+    root:{
+      flexGrow:1
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+    sizeSet:{
+      width: '5vh',
+      height: '5vh'
+    }
+  }))
+
 const ProductcreateScreen = (props) => {
+    const classes = useStyles()
     const [modalVisible, setModalVisible] = useState(false);
     const [id,setId] = useState('')
     const [name,setName] = useState('')
@@ -68,7 +88,7 @@ const ProductcreateScreen = (props) => {
         const bodyFormData = new FormData()
         bodyFormData.append('image',file)
         setUploading(true)
-        Axios.post('/api/uploads',bodyFormData,{
+        Axios.post('/api/uploads/s3',bodyFormData,{
             headers:{
                 'Content-type':'multipart/form-data'
             }
@@ -102,7 +122,7 @@ const ProductcreateScreen = (props) => {
     // registerinwithGoogle(dispatch(name,emaildata,tokenid,googleid))
     return (
     <LoadingOverlay
-        active={loading}
+        active={loading||loadingDelete||loadingSave}
         spinner
         text='Loading your content...'
      >
@@ -154,7 +174,7 @@ const ProductcreateScreen = (props) => {
                         <label htmlFor='image'>Image</label>
                         <input type="text" value={image} name="image" id="image" onChange={(e)=>setImage(e.target.value)} />
                         <input type='file' onChange={uploadFileHandler}></input>
-                        {uploading&&<div>uploading...</div>}
+                        {uploading&&<CircularProgress size={15} />}
                     </li>
                     <li>
                         <label htmlFor='countInStack'>QTY</label>
@@ -166,7 +186,7 @@ const ProductcreateScreen = (props) => {
                         <input type="text" value={description} name="description" id="description" onChange={(e)=>setDescription(e.target.value)} />
                     </li>
                     <li>
-                        <button type="submit" className="button primary" disabled={loadingSave}>
+                        <button type="submit" className="button primary" disabled={loadingSave||uploading}>
                         {loadingSave&&<CircularProgress size={15} />}
                             {id ? 'Update' : 'Create'}
                         </button>
@@ -209,9 +229,11 @@ const ProductcreateScreen = (props) => {
                             <td>{product.category}</td>
                             <td>{product.brand}</td>
                             <td>
-                                <button className="button" onClick={()=>openModal(product)}>Edit</button>{' '}
-                                <button className="button" onClick={()=> deleteHandler(product)} disabled={loadingDelete}>
-                                {loadingDelete&&<CircularProgress size={15} />}Delete</button>
+                                {/* <button className="button" onClick={()=>openModal(product)}>Edit</button>{' '} */}
+                                <EditIcon className={classes.sizeSet} onClick={()=>openModal(product)} />
+                                <DeleteForeverIcon className={classes.sizeSet} onClick={()=> deleteHandler(product)}  disabled={loadingDelete} />
+                                {/* <button className="button" onClick={()=> deleteHandler(product)} disabled={loadingDelete}> */}
+                                {/* {loadingDelete&&<CircularProgress size={15} />} */}
                             </td>
                         </tr>
                         ))}

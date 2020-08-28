@@ -43,6 +43,7 @@ const PaymentScreen = (props) => {
                   name="paymentMethod"
                   id="paymentMethod"
                   value="COD"
+                  disabled='true'
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 ></input>
                 <label htmlFor="paymentMethod">Cash-On-Delivery</label>

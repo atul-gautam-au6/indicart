@@ -6,10 +6,22 @@ import    {signin }   from '../action/userAction';
 import ForgatePassword from './ForgatePassword'
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import {CircularProgress} from '@material-ui/core'
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
-import Axios from 'axios';
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(2),
+        width: '50vh',
+      },
+    },
+  }));
 
 const SignScreens = (props) => {
+    const classes = useStyles();
    const [email,setEmail] = useState('')
   // const [response,setResponse]=useState('')
    const [password,setPassword] = useState('')
@@ -48,7 +60,7 @@ const SignScreens = (props) => {
     }
     
     return (
-        <div className='form'>
+        <div className={classes.root}  autoComplete="off" className='form'>
            <form onSubmit={submitHandler}> 
                 <ul className="form-container">
                     <li>
@@ -62,13 +74,15 @@ const SignScreens = (props) => {
                         }
                     </li>
                     <li>
-                        <label htmlFor='email'>Email</label>
-                        <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)} required='true' />
+                    <TextField id="outlined-basic" label="Email" type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)} required='true' variant="outlined" />
+                        {/* <label htmlFor='email'>Email</label>
+                        <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)} required='true' /> */}
 
                     </li>
                     <li>
-                        <label htmlFor='password'>Password</label>
-                        <input type="password" name="password" id="password" onChange={(e)=>setPassword(e.target.value)} required='true'/>
+                    <TextField id="outlined-basic" label="Password" type="password" name="password" id="password" onChange={(e)=>setPassword(e.target.value)} required='true' variant="outlined" />
+                        {/* <label htmlFor='password'>Password</label>
+                        <input type="password" name="password" id="password" onChange={(e)=>setPassword(e.target.value)} required='true'/> */}
 
                     </li>
                     <li>
