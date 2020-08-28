@@ -27,10 +27,11 @@ const OrderScreen = (props) => {
     const dispatch = useDispatch()
     useEffect(()=>{
       if(successPay){
+        props.history.push('/profile')
         dispatch(confirmEmail(order))
         if(emailSuccess){
           alert('your order has been successed')
-          props.history.push('/profile')
+         
         }
 
       }else{

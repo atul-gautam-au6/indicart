@@ -62,10 +62,10 @@ router.get('/emailconfirm/:token',async(req,res)=>{
 })
 
 router.post('/forgatePassword/:email',async(req,res)=>{
-  console.log(req.params.email)
+  // console.log(req.params.email)
   const email = req.params.email;
   const user =await User.findOne({email:email})
-  console.log(user)
+  // console.log(user)
       if(user){
         const accessToken = sign({id:user._id},JWT_SECRET_KEY,{
           expiresIn:'1h'
@@ -95,8 +95,22 @@ router.post('/forgatePassword/:email',async(req,res)=>{
   else
   {
     console.log('user-not-found')
-    return res.send('user-not-found')
+    // return res.send('user-not-found')
   }
+})
+router.post('/passwordUpdate/:token',async(req,res)=>{
+  const token = req.params.token;
+  const user = verify(token,JWT_SECRET_KEY)
+  const hashedPassword = await hash(req.body.password, 10)
+  const{ nModified }=await  User.updateOne({_id:user.id},{$set:{password:hashedPassword}})  
+  console.log(user,hashedPassword,nModified)
+  if(nModified==1){
+        console.log('password changed')         
+    return res.status(201).send('Password Changes ')
+   }
+   else{
+       console.log('some error of changing password:DB')
+   }
 })
 
 export default router;

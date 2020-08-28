@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import Cookies from "js-cookie"
 import {productListReducer, productDetailReducer, productSaveReducer, productDeleteReducer, productReviewSaveReducer} from "./reducer/productReducer";
 import cartReducer from "./reducer/cartReducer";
-import { userSignInReducer, userRegisterInReducer, userUpdateReducer, userEmailVerify, userForgatePassword ,forgatePasswordValidation} from "./reducer/UserReducer";
+import { userSignInReducer, userRegisterInReducer, userUpdateReducer, userEmailVerify, userForgatePassword ,forgatePasswordValidation, forgatpassRecover} from "./reducer/UserReducer";
 import { myOrderListReducer, orderCreateReduce, orderdetailsReducer, orderPayReducer, orderListReducer, orderDeleteReducer, orderConformEmail } from "./reducer/orderReducer";
 
 const cartItems = Cookies.getJSON("cartItems")||[]
@@ -29,7 +29,8 @@ const reducer =  combineReducers({
     orderConformEmail:orderConformEmail,
     emailValidation:userEmailVerify,
     forgetPassword:userForgatePassword,
-    emailForgatePasswordValidation:forgatePasswordValidation
+    emailForgatePasswordValidation:forgatePasswordValidation,
+    forgateformSubmit:forgatpassRecover
     
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__||compose

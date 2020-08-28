@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import    {signin }   from '../action/userAction';
-import GoogleLogin from 'react-google-login';
+// import GoogleLogin from 'react-google-login';
 import ForgatePassword from './ForgatePassword'
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import {CircularProgress} from '@material-ui/core'
 
 import Axios from 'axios';
@@ -76,7 +76,7 @@ const SignScreens = (props) => {
                         {loading&&<CircularProgress size={15} />}
                             Sign-in</button>
                     </li>
-                    <li>
+                    {/* <li>
                         <GoogleLogin 
                         className="button"
                             clientId="485426421084-eoa7b38nq83it0t5742j08sejfbg9ivh.apps.googleusercontent.com"
@@ -100,10 +100,10 @@ const SignScreens = (props) => {
                                 <button onClick={renderProps.onClick} className='button secondary'>sign-in with Facebook</button>
                               )}
                         />
-                    </li>
+                    </li> */}
                     <li>
 
-                  
+                    <ForgatePassword />
                     </li>
                     <li>
                         New  User
@@ -113,7 +113,7 @@ const SignScreens = (props) => {
                     </li>
                 </ul>
            </form>
-           <ForgatePassword>Forgate Password</ForgatePassword>
+          
         </div>
             
     )

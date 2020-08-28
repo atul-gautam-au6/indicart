@@ -8,7 +8,6 @@ import CartScreen from './screens/CartScreen';
 import SignScreens from './screens/SignInScreen';
 import Registerscreen from './screens/Registerscreen';
 import { useSelector, useDispatch } from 'react-redux';
-// import ForgatepasswordAfterEmail from './screens/ForgatepasswordAfterEmail'
 import Shoppingcreen from './screens/Shoppingcreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
@@ -20,6 +19,8 @@ import OrdersScreen from './screens/OrdersScreen';
 // import MenuIcon from '@material-ui/icons/Menu';
 import EmailConfirm from './screens/EmailConfirm';
 import ForgatepasswordAfterEmail from './screens/ForgatepasswordAfterEmail';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 const useStyles = makeStyles((theme)=>({
   root:{
     flexGrow:1
@@ -30,6 +31,10 @@ const useStyles = makeStyles((theme)=>({
   title: {
     flexGrow: 1,
   },
+  sizeSet:{
+    width: '5vh',
+    height: '5vh'
+  }
 }))
 
 function App() { 
@@ -56,14 +61,14 @@ function App() {
             <button onClick={openMenu}>
                 &#9776;
             </button>
-            <Link to="/" className="logo">Indi cart &#174;</Link>
+            <Link to="/" className="logo">Indicart &#174;</Link>
           
         </div>
         <div className="header-links">
-            <a href="cart.html">Cart</a>
+        <Link to="/signin"> <ShoppingCartIcon className={classes.sizeSet} /></Link>
             {
               userInfo ? <Link to='/profile'>{userInfo.name}</Link>: 
-              <Link to="/signin">Signin</Link>
+              <Link to="/signin"><PowerSettingsNewIcon className={classes.sizeSet} /></Link>
             }
             
             {userInfo && userInfo.isAdmin && (

@@ -8,7 +8,7 @@ const EmailConfirm = (props) => {
     const token = props.match.params.token;
     const dispatch = useDispatch();
     const emailValidatin = useSelector(state=>state.emailValidation)
-    console.log(emailValidatin)
+    // console.log(emailValidatin)
     const {loading , error, success} = emailValidatin
 
     useEffect(() => {
@@ -20,9 +20,9 @@ const EmailConfirm = (props) => {
             dispatch(emailConfirm(token))
 
         }
-        if(!token){
-            alert('no link are available')
-        }
+        // if(!token){
+        //     alert('no link are available')
+        // }
         return () => {
             // cleanup
         }

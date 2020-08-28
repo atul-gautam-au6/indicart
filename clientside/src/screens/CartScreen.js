@@ -3,8 +3,21 @@ import addToCard from '../action/addToCart'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import removeFromCart from '../action/removeFromCart';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+
+const useStyles = makeStyles((theme)=>({
+    
+    sizeSet:{
+      width: '7vh',
+      height: '5vh'
+    }
+  }))
 
 const CartScreen = (props) => {
+    const classes = useStyles()
 
     const cart = useSelector(state =>state.cart);
     const {cartItems} = cart
@@ -67,9 +80,9 @@ const CartScreen = (props) => {
                                                         )}
                                                         
                                                </select>
-                                                <button type="button" className="button primary" onClick={() => removeFromCartHandler(item.product)} >
-                                                    Delete
-                                                </button>
+                                                {/* <button type="button" className="button "  > */}
+                                                   <DeleteIcon className={classes.sizeSet} onClick={() => removeFromCartHandler(item.product)}/>
+                                                {/* </button> */}
                                             </div>
                                         </div>
                                         <div className="cart-price">

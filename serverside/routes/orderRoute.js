@@ -58,7 +58,7 @@ router.post('/confirmOrderEmail',isAuth,async(req,res)=>{
         if(!req.body.isPaid){
             console.log('your payment failled')
         }
-        
+       console.log(req.body.orderItems)
         const transport = nodemailer.createTransport({
             host:'smtp.gmail.com',
             port:465,
@@ -77,10 +77,10 @@ router.post('/confirmOrderEmail',isAuth,async(req,res)=>{
                     <p>thanks for shopping to indicart</p>
                    <ul>
                         <li>orderId: ${req.body._id} </li>
-                        <li>Shipping address: ${req.body.shipping.address}  ${req.body.shipping.city} ${req.body.shipping.postelCode} ${req.body.shipping.country}</li>
-                        <li>your Product: ${req.body.orderItems.name} (${req.body.orderItems.qty}) </li>
+                        <li>Shipping address: ${req.body.shipping.address}  ${req.body.shipping.city} ${req.body.shipping.postalCode} ${req.body.shipping.country}</li>
+                        <li>your Product: ${req.body.orderItems[0].name} (${req.body.orderItems[0].qty}) </li>
                         <li>Payment Method: ${req.body.payment.paymentMethod}</li>
-                        <li>totalPrice: ${req.body.totalprice}</li>
+                        <li>totalPrice: ${req.body.totalPrice}</li>
                    </ul>
             `
         })

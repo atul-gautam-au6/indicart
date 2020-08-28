@@ -13,6 +13,7 @@ const PlaceOrderScreen = (props) => {
     const { loading, success, error, order } = orderCreate;
   
     const { cartItems, shipping, payment } = cart;
+    // console.log(cart)
     if (!shipping.address) {
       props.history.push("/shipping");
     } else if (!payment) {

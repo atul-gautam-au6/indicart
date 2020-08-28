@@ -23,14 +23,14 @@ export default function ForgatePassword() {
   };
   useEffect(() => {
     if(success){
-        alert('forgate success')
+        alert('forgate success pls check your email')
         setOpen(false);
     }
-    
+        
     return () => {
       // cleanup
     }
-  }, [success])
+  }, [])
 
   const handleClose = (e) => {
       
