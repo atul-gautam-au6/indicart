@@ -6,9 +6,9 @@ import PaypalButton from '../components/PaypalButton.js';
 // import LoadingOverlay from 'react-loading-overlay';
 import {CircularProgress} from '@material-ui/core'
 import ConfirmOrder from './ConfirmOrder';
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import LoadingOverlay from 'react-loading-overlay';
+// import LoadingOverlay from 'react-loading-overlay';
 
 
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from '@material-ui/core'
 
 const ConfirmOrder = ({orderDetails}) => {
-    console.log(orderDetails)
+    // console.log(orderDetails)
     const {order} = orderDetails
     return (
         <div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {  useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { saveshipping } from '../action/shippingAction';
-import Axios from 'axios';
+// import Axios from 'axios';
 
 const Shoppingcreen = (props) => {
   
@@ -13,7 +13,7 @@ const Shoppingcreen = (props) => {
     const [country, setCountry] = useState('');
 
     const cart = useSelector(state => state.cart);
-    const {  addressUpdate } = cart;
+    // const {  addressUpdate } = cart;
     // console.log(cart)
     const userSignin = useSelector(state =>state.userSignin)
     // console.log(userSignin)

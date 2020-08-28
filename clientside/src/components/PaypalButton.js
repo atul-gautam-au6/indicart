@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import {CircularProgress} from '@material-ui/core'
+// import {CircularProgress} from '@material-ui/core'
 import LoadingOverlay from 'react-loading-overlay';
 
 function PaypalButton(props) {

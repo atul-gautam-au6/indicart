@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import  listProduct  from '../action/productAction';
 import LoadingOverlay from 'react-loading-overlay';
 import Rating from '../components/Rating';
-import { listProducts, listProductsSearch } from '../action/productsave';
+import {  listProductsSearch } from '../action/productsave';
 
 const HomeScreen = (props) => {
 const [searchKeyword,setSearchKeyword] = useState('')

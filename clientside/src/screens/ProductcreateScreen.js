@@ -18,11 +18,11 @@ const ProductcreateScreen = (props) => {
     const [offers,setOffers] = useState('')
     const [image,setImage] = useState('')
     const [countInStack,setCountInStack] = useState('')
-    const [pack_size,setPack_size] = useState('')
+    // const [pack_size,setPack_size] = useState('')
    const [description,setDescription] = useState('')
     const [uploading,setUploading] = useState(false)
-   const [numRevies,setNumRevies] = useState('')
-   const [rating,setRating] = useState('')
+//    const [numRevies,setNumRevies] = useState('')
+//    const [rating,setRating] = useState('')
 
    const productlist = useSelector(state=>state.productList)
    const {loading,products,error} = productlist

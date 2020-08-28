@@ -19,17 +19,17 @@ const SignScreens = (props) => {
     const dispatch = useDispatch();
     const redirect = props.location.search?props.location.search.split("=")[1]:'/'
 
-    const responseGoogle=async(response)=>{
+    // const responseGoogle=async(response)=>{
         
-         await Axios.post('/api/users/register',{tokenId:response.tokenId})
+    //      await Axios.post('/api/users/register',{tokenId:response.tokenId})
         
-    }
-    const responseFacebook=async(response)=>{
-        console.log(response)
+    // }
+    // const responseFacebook=async(response)=>{
+    //     console.log(response)
         
-        await Axios.post('/api/users/register',{accessToken:response.accessToken,userID:response.userID})
+    //     await Axios.post('/api/users/register',{accessToken:response.accessToken,userID:response.userID})
         
-    }   
+    // }   
 
 
 // eslint-disable-next-line 
