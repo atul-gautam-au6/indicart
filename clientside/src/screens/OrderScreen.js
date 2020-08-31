@@ -8,6 +8,7 @@ import {CircularProgress} from '@material-ui/core'
 import ConfirmOrder from './ConfirmOrder';
 // import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import removeFromCart from '../action/removeFromCart';
 // import LoadingOverlay from 'react-loading-overlay';
 
 
@@ -22,6 +23,10 @@ const OrderScreen = (props) => {
     const orderDetails = useSelector(state => state.orderDetails);
     const { loading, order, error } = orderDetails;
     // console.log(orderDetails)
+    const cart = useSelector(state =>state.cart);
+    const {cartItems} = cart
+    // cartItems.map(item=>console.log(item.product))
+
   const emailsendsuccess = useSelector(state=>state.orderConformEmail)
   const {loading:emailSendConform,success:emailSuccess,error:emailError} = emailsendsuccess
     const dispatch = useDispatch()
@@ -29,17 +34,16 @@ const OrderScreen = (props) => {
       if(successPay){
         props.history.push('/profile')
         dispatch(confirmEmail(order))
-        if(emailSuccess){
-          alert('your order has been successed')
-         
-        }
+        cartItems.map(item=>dispatch(removeFromCart(item.product)))
+
 
       }else{
 
         dispatch(detailsOrder(props.match.params.id))
       }
         return ()=>{
-         
+        //  successPay = false
+        //  emailsendsuccess=false
         }
     },[successPay])
     const handleSuccessPayment = (paymentResult) =>{

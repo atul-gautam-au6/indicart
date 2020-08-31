@@ -1,7 +1,7 @@
 import {createStore,combineReducers, compose, applyMiddleware} from "redux";
 import thunk from 'redux-thunk'
 import Cookies from "js-cookie"
-import {productListReducer, productDetailReducer, productSaveReducer, productDeleteReducer, productReviewSaveReducer} from "./reducer/productReducer";
+import {productListReducer, productDetailReducer, productSaveReducer, productDeleteReducer, productReviewSaveReducer, paginateControllel} from "./reducer/productReducer";
 import cartReducer from "./reducer/cartReducer";
 import { userSignInReducer, userRegisterInReducer, userUpdateReducer, userEmailVerify, userForgatePassword ,forgatePasswordValidation, forgatpassRecover} from "./reducer/UserReducer";
 import { myOrderListReducer, orderCreateReduce, orderdetailsReducer, orderPayReducer, orderListReducer, orderDeleteReducer, orderConformEmail } from "./reducer/orderReducer";
@@ -30,7 +30,8 @@ const reducer =  combineReducers({
     emailValidation:userEmailVerify,
     forgetPassword:userForgatePassword,
     emailForgatePasswordValidation:forgatePasswordValidation,
-    forgateformSubmit:forgatpassRecover
+    forgateformSubmit:forgatpassRecover,
+    paginationControl:paginateControllel
     
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__||compose

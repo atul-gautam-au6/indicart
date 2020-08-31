@@ -34,6 +34,7 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
+position:sticky;
 }
 .brand a {
   color: #ffffff;
@@ -64,6 +65,9 @@ a {
   text-decoration: none;
 }
 a:hover {
+  color: #ff8000;
+}
+MuiSvgIcon-root:hover{
   color: #ff8000;
 }
 /* Home Screen */

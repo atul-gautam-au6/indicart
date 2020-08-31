@@ -28,7 +28,7 @@ const OrdersScreen = (props) => {
   const classes = useStyles()
     const orderList = useSelector(state=>state.orderList)
     const {loading,orders,error} = orderList
-
+    // console.log(orders)
     const orderDelete  = useSelector(state=>state.orderDelete)
     const {loading: loadingDelete, success: successDelete, error: errorDelete } = orderDelete
 
@@ -77,7 +77,7 @@ const OrdersScreen = (props) => {
               <td>{order._id}</td>
               <td>{order.createdAt}</td>
               <td>{order.totalPrice}</td>
-              <td>{order.user.name}</td>
+              <td>{order.user&&order.user.name}</td>
               <td>{order.isPaid.toString()}</td>
               <td>{order.paidAt}</td>
               <td>{order.isDelivered.toString()}</td>

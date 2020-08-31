@@ -19,15 +19,7 @@ const useStyles = makeStyles((theme)=>({
 const CartScreen = (props) => {
     const classes = useStyles()
     const orderPay = useSelector(state => state.orderPay);
-    useEffect(() => {
-        // effect
-        const { loading: loadingPay,order, success: successPay, error: errorPay } = orderPay;
-      console.log(order)
-
-        return () => {
-            // cleanup
-        }
-    }, [])
+   
 
     const cart = useSelector(state =>state.cart);
     const {cartItems} = cart
@@ -45,7 +37,8 @@ const CartScreen = (props) => {
     useEffect(() => {
         if(productId)
         dispatch(addToCard(productId,qty))
-      
+    //   if(successPay)
+    //     dispatch(removeFromCart())
     }, [cartItems])
    
     

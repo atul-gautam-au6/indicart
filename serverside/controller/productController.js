@@ -18,7 +18,7 @@ module.exports={
     const regex = new RegExp(escapeRegex(category||searchKeyword||sortOrder), 'gi');
     const productroute = await  productmodel.paginate({$or:[{category:regex||''},{name:regex},{brand:regex}]},option)
     // console.log(finddata)
-   return  res.send(productroute.docs)
+   return  res.send({productlist:productroute})
     },
 
 

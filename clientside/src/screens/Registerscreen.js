@@ -15,11 +15,11 @@ const Registerscreen = (props) => {
    const {loading,userInfo,error} =userRegister
     const dispatch = useDispatch();
     const redirect = props.location.search?props.location.search.split("=")[1]:'/'
-    console.log(redirect)
+    // console.log(redirect)
 // eslint-disable-next-line 
     useEffect(() => {
         if(userInfo){
-            props.history.push(redirect)
+            props.history.push('/signin')
         }
         return () => {
             //cleanup

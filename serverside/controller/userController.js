@@ -63,7 +63,6 @@ module.exports ={
                const accessToken = sign({id:NewUser._id},JWT_SECRET_KEY,{
                    expiresIn:'1h'
                })
-            //    console.log(EMAIL,PASSWORD)
                const transport = nodemailer.createTransport({
                    host:'smtp.gmail.com',
                    port:465,
@@ -73,10 +72,8 @@ module.exports ={
                        pass:PASSWORD                    
                    }
                })
-
-            //    console.log('transport ',transport )
-               const url = `http://localhost:3000/user/emailconfirm/${accessToken}`;
-               
+               const url = `https://indicart.herokuapp.com/user/emailconfirm/${accessToken}`;
+               console.log('SMTP Configured');
                  const { response}=  await transport.sendMail({
                        to:NewUser.email,
                        subject:'IndiCart-Email-Conformation',
@@ -92,8 +89,8 @@ module.exports ={
            
             
         } catch (error) {
-            console.log(error.message)
-            return res.send('catch eroor:',error.message)
+            console.log('catch eroor:',error.message)
+            return res.send(error.message)
         }
         
     },

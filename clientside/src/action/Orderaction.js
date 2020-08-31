@@ -67,6 +67,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
         headers:
           { Authorization: 'Bearer' + userInfo.token }
       });
+      // console.log(data)
       dispatch({ type: ORDER_LIST_SUCCESS, payload: data })
     } catch (error) {
       dispatch({ type: ORDER_LIST_FAIL, payload: error.message });
@@ -90,7 +91,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
     try {
       dispatch({ type: ORDER_CONFORM_REQUEST, payload: order });
       const { userSignin: { userInfo } } = getState();
-      console.log(userInfo.token)
+      // console.log(userInfo.token)
       const { data } = await Axios.post("/api/orders/confirmOrderEmail", order,{
         headers:
           { Authorization: 'Bearer' + userInfo.token }

@@ -79,7 +79,7 @@ router.post('/forgatePassword/:email',async(req,res)=>{
             pass:PASSWORD                    
         }
     })
-    const url = `http://localhost:3000/user/passwordconfirm/${accessToken}`;
+    const url = `https://indicart.herokuapp.com/user/passwordconfirm/${accessToken}`;
                
                  const { response}=  await transport.sendMail({
                        to:user.email,

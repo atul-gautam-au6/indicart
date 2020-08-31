@@ -3,7 +3,6 @@ import multer from 'multer';
 import multerS3 from 'multer-s3';
 import aws from 'aws-sdk';
 import {accessKeyId,secretAccessKey} from '../config';
-console.log(accessKeyId,secretAccessKey)
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, 'uploads/');

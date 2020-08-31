@@ -8,7 +8,9 @@ import Axios from 'axios';
 import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import PaginationControlled from './PaginationControlled';
 // import { response } from 'express';
+// import PaginationControlled from './productPaginate';
 
 const useStyles = makeStyles((theme)=>({
     root:{
@@ -44,8 +46,11 @@ const ProductcreateScreen = (props) => {
 //    const [numRevies,setNumRevies] = useState('')
 //    const [rating,setRating] = useState('')
 
-   const productlist = useSelector(state=>state.productList)
-   const {loading,products,error} = productlist
+const productList = useSelector(state=>
+    state.productList
+  );
+  const {products,loading,error} = productList
+//    console.log(products)
    const productSave = useSelector(state=>state.productSave)
    const {loading:loadingSave,success:successSave,errorSave} = productSave
 
@@ -138,7 +143,7 @@ const ProductcreateScreen = (props) => {
            <form onSubmit={submitHandler}> 
                 <ul className="form-container">
                     <li>
-                        <h2>Ceate-Product</h2>
+                        <h2>CREATE-PRODUCT</h2>
                     </li>
                     <li>
                        
@@ -241,7 +246,7 @@ const ProductcreateScreen = (props) => {
                 </table>
             </div>
         </div>
-       
+        <PaginationControlled />
          </LoadingOverlay>   
     )
 }

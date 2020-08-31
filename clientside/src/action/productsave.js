@@ -1,4 +1,4 @@
-import { PRODUCT_SAVE_REQUEST,PRODUCT_LIST_REQ, PRODUCT_SAVE_SUCCESS, PRODUCT_SAVE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL } from "../actionType";
+import { PRODUCT_SAVE_REQUEST,PRODUCT_LIST_REQ, PRODUCT_SAVE_SUCCESS, PRODUCT_SAVE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_PAGINATE } from "../actionType";
 
 const { default: Axios } = require("axios");
 
@@ -59,7 +59,10 @@ export const listProductsSearch = (
         const {data} = await Axios.get(
             '/api/products?category='+category+'&searchKeyword='+searchKeyword+'&sortOrder='+sortOrder+'&page='+page
         )
-        dispatch({type:PRODUCT_LIST_SUCCESS,payload:data})
+        // console.log(data)
+        // console.log(data.productlist.pages)
+        dispatch({type:PRODUCT_LIST_SUCCESS,payload:data.productlist.docs})
+        dispatch({type:PRODUCT_LIST_PAGINATE,payload:data.productlist.pages})
     } catch (error) {
         dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
     }

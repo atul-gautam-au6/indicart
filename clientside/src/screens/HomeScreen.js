@@ -14,7 +14,7 @@ import PaginationControlled from '../components/PaginationControlled';
 
 
 const useStyles = makeStyles((theme)=>({
-    
+   
     sizeSet:{
       width: '9vh',
       height: '5vh'
@@ -33,6 +33,7 @@ const category = props.match.params.id?props.match.params.id:''
       state.productList
     );
     const {products,loading,error} = productList
+    // console.log(products)
     const dispatch = useDispatch()
 
 // eslint-disable-next-line
