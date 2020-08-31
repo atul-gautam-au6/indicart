@@ -11,7 +11,7 @@ import { forgetPasswordActio } from '../action/userAction';
 import LoadingOverlay from 'react-loading-overlay';
 
 
-export default function ForgatePassword() {
+export default function ForgatePassword(props) {
   const [open, setOpen] = React.useState(false);
   const [email,setEmail] = React.useState('')
   const dispatch = useDispatch();
@@ -21,17 +21,7 @@ export default function ForgatePassword() {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  useEffect(() => {
-    if(success){
-        alert('forgate success pls check your email')
-        setOpen(false);
-    }
-        
-    return () => {
-      // cleanup
-    }
-  }, [])
-
+ 
   const handleClose = (e) => {
       
     setOpen(false);
@@ -39,7 +29,9 @@ export default function ForgatePassword() {
   const submitHandler = (e)=>{
     e.preventDefault()
     dispatch(forgetPasswordActio(email))
+    setOpen(false);
   }
+  
   return (
     
     <LoadingOverlay
@@ -47,7 +39,8 @@ export default function ForgatePassword() {
           spinner
           text='Email Sending...'
         >
-    <Button variant="outlined"  className='botton  primary' onClick={handleClickOpen}> <h5> Forgate Password </h5> </Button>
+    <Button variant="outlined"  className='botton  primary' onClick={handleClickOpen}> <h5> Reset Password </h5> </Button>
+    {success&&<div>reset link has been set your email</div>}
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title"><h5>Forgat Password</h5></DialogTitle>
         <DialogContent>
@@ -55,7 +48,7 @@ export default function ForgatePassword() {
               <form onSubmit={submitHandler}>
               <TextField autoFocus value={email} margin="dense" id="name" label="Email Address" type="email" onChange={(e)=>setEmail(e.target.value)} fullWidth />
                   <DialogActions><Button onClick={handleClose} color="primary"> <h5> Cancel</h5> </Button>
-                    <input type='submit'  value='submit' color="primary" className='button primary'/>
+                    <input type='submit'  value='submit' color="primary" />
                   </DialogActions>
               </form>
         </DialogContent>

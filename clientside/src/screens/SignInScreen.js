@@ -8,7 +8,6 @@ import ForgatePassword from './ForgatePassword'
 import {CircularProgress} from '@material-ui/core'
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { useForm } from "react-hook-form";
 
 
 
@@ -22,9 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const SignScreens = (props) => {
-    const { register, errors, handleSubmit } = useForm({
-        criteriaMode: "all"
-      });
+   
     const classes = useStyles();
    const [email,setEmail] = useState('')
   // const [response,setResponse]=useState('')
@@ -47,25 +44,28 @@ const SignScreens = (props) => {
         
     // }   
 
-
+    
 // eslint-disable-next-line 
     useEffect(() => {
         
         if(userInfo){
             props.history.push(redirect)
         }
+       
         return () => {
             //cleanup
+
+            
         }
     }, [userInfo])
     const submitHandler=(e)=>{
-        // e.preventDefault()
+        e.preventDefault()
         dispatch(signin(email,password))
     }
     
     return (
         <div className={classes.root}  autoComplete="off" className='form'>
-           <form onSubmit={handleSubmit(submitHandler)}> 
+           <form onSubmit={submitHandler}> 
                 <ul className="form-container">
                     <li>
                         <h2>Sign-in</h2>
@@ -81,7 +81,6 @@ const SignScreens = (props) => {
                     <TextField id="outlined-basic" label="Email" type="email" name="email" id="email"  onChange={(e)=>setEmail(e.target.value)} 
                     
                     required='true' variant="outlined" />
-                    {errors.email && errors.email.message}
                         {/* <label htmlFor='email'>Email</label>
                         <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)} required='true' /> */}
                             
@@ -125,7 +124,7 @@ const SignScreens = (props) => {
                     </li> */}
                     <li>
 
-                    <ForgatePassword />
+                   
                     </li>
                     <li>
                         New  User
@@ -135,7 +134,7 @@ const SignScreens = (props) => {
                     </li>
                 </ul>
            </form>
-          
+           <ForgatePassword />
         </div>
             
     )

@@ -84,7 +84,7 @@ router.post('/forgatePassword/:email',async(req,res)=>{
                  const { response}=  await transport.sendMail({
                        to:user.email,
                        subject:'IndiCart-forgate-password',
-                       html:`please click on <a href=${url}>forgate_password </a> `
+                       html:`please click on <a href=${url}>reset_confirm_link </a> `
                    })
                    if(response){
                        console.log('working...')

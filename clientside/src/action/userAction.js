@@ -81,7 +81,7 @@ export const emailConfirm = (token)=>async(dispatch)=>{
 export const forgetPasswordActio = (email)=>async(dispatch)=>{
     try {
         dispatch({type:USER_FORGATE_PASSWORD_REQ,payload:email})
-        console.log(email)
+        // console.log(email)
         const data = await Axios.post('/api/users/forgatePassword/'+email)
         console.log(data)
         dispatch({type:USER_FORGATE_PASSWORD_SUCCESS,payload:data})

@@ -35,14 +35,14 @@ const OrderScreen = (props) => {
         props.history.push('/profile')
         dispatch(confirmEmail(order))
         cartItems.map(item=>dispatch(removeFromCart(item.product)))
-
+        // const successPay=false
 
       }else{
 
         dispatch(detailsOrder(props.match.params.id))
       }
         return ()=>{
-        //  successPay = false
+        // const successPay = false
         //  emailsendsuccess=false
         }
     },[successPay])
